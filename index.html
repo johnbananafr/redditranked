@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1416">
+<title>r/LastCustomer — Moderator Mayhem V2</title>
+<style>
+:root{--page:#0b1416;--card:#1a1a1b;--card2:#272729;--line:#343536;--text:#d7dadc;--muted:#818384;--orange:#ff4500;--blue:#4fbcff;--down:#7193ff;--green:#46d160;--red:#ea3a4f;--yellow:#ffb000;--purple:#a06cff;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font:14px/1.45 "IBM Plex Sans",Verdana,Arial,sans-serif;min-height:100vh}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.hide{display:none!important}
+b{font-weight:700}
+/* NAV */
+.nav{position:sticky;top:0;z-index:20;height:48px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 14px}
+.logo{width:32px;height:32px;border-radius:50%;background:var(--orange);position:relative;flex:none}
+.logo::before,.logo::after{content:"";position:absolute;top:12px;width:5px;height:5px;border-radius:50%;background:#fff}
+.logo::before{left:8px}.logo::after{right:8px}
+.logo i{position:absolute;left:10px;bottom:7px;width:12px;height:5px;border-bottom:2px solid #fff;border-radius:0 0 8px 8px}
+.wordmark{font-weight:800;font-size:20px;letter-spacing:-.5px;white-space:nowrap}.wordmark b{color:var(--orange)}
+.search{flex:1;max-width:520px;margin:0 auto;background:var(--card2);border:1px solid var(--line);border-radius:99px;padding:6px 16px;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.navr{display:flex;align-items:center;gap:6px;margin-left:auto}
+.navbtn{position:relative;width:34px;height:34px;border-radius:50%;font-size:17px;transition:background .15s}
+.navbtn:hover{background:var(--card2)}
+.badge{position:absolute;top:0;right:0;min-width:16px;height:16px;border-radius:9px;background:var(--orange);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center;padding:0 4px;transform:scale(0);transition:transform .2s var(--ease)}
+.badge.on{transform:scale(1)}
+.dayp{background:var(--card2);border:1px solid var(--line);border-radius:99px;padding:4px 11px;font-size:12px;font-weight:700;white-space:nowrap}
+/* BANNER */
+.banner{height:112px;position:relative;overflow:hidden;background:linear-gradient(#150c26,#4b2043 55%,#b5472c);transition:filter .8s}
+.banner .moon{position:absolute;right:14%;top:14px;width:30px;height:30px;border-radius:50%;background:#f4e7c0;box-shadow:0 0 18px #f4e7c055}
+.banner .ground{position:absolute;left:0;right:0;bottom:0;height:20px;background:#09090b}
+.banner .canopy{position:absolute;left:10%;bottom:20px;width:260px;height:10px;background:#2b2b33;border-radius:2px}
+.banner .pillar{position:absolute;bottom:20px;width:7px;height:46px;background:#2b2b33}
+.banner .p1{left:calc(10% + 24px)}.banner .p2{left:calc(10% + 220px)}
+.banner .pump{position:absolute;bottom:20px;left:calc(10% + 112px);width:16px;height:26px;background:#bb3c2a;border-radius:2px}
+.banner .shop{position:absolute;left:calc(10% + 300px);bottom:20px;width:120px;height:46px;background:#1f1f27;border:2px solid #34343f}
+.banner .shop::after{content:"";position:absolute;left:12px;top:12px;width:96px;height:20px;background:#ffd36e55}
+.banner .clk{position:absolute;left:calc(10% + 300px);bottom:72px;background:#120a0a;color:#ff5a3a;font:700 15px/1 "Courier New",monospace;padding:3px 7px;border:1px solid #442;text-shadow:0 0 8px #ff4500}
+.era-v .banner{filter:saturate(1.35) brightness(1.1)}
+/* SUBHEAD */
+.subhead{background:var(--card);border-bottom:1px solid var(--line)}
+.subin{max-width:1120px;margin:0 auto;padding:0 16px 12px;display:flex;align-items:flex-end;gap:14px}
+.icon{width:76px;height:76px;margin-top:-26px;border-radius:50%;background:#ffc93c;border:4px solid var(--card);display:grid;place-items:center;font-size:38px;flex:none;position:relative}
+.subinfo{flex:1;min-width:0;padding-top:8px}
+.subinfo h1{margin:0;font-size:26px;line-height:1.1;letter-spacing:-.3px}
+.subtag{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.subbtns{display:flex;gap:8px;align-items:center}
+.pill{border:1px solid var(--text);border-radius:99px;padding:3px 16px;font-weight:700;font-size:13px}
+.pill.solid{background:var(--orange);border-color:var(--orange);color:#fff}
+.trend{font-size:11px;font-weight:800;color:var(--orange);border:1px solid var(--orange);border-radius:99px;padding:3px 9px;animation:fadein .6s var(--ease)}
+/* WRAP */
+.wrap{max-width:1120px;margin:0 auto;padding:14px 16px 90px}
+.hud{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:14px}
+.cell{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:8px 10px;min-width:0}
+.cell label{display:block;font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--muted);text-transform:uppercase}
+.cell strong{font-size:20px;line-height:1.2;display:block;font-variant-numeric:tabular-nums}
+.cell small{color:var(--muted);font-size:11px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meter{height:5px;background:#343536;border-radius:9px;overflow:hidden;margin-top:4px}
+.meter i{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(.5);transition:transform .5s var(--ease);border-radius:9px}
+.mh i{background:var(--green)}.mc i{background:linear-gradient(90deg,var(--yellow),var(--red))}.mr i{background:var(--blue)}.mm i{background:var(--purple)}.mq i{background:var(--yellow)}
+.mq.over i{background:var(--red)}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 312px;gap:18px;align-items:start}
+/* TABS */
+.tabs{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:6px 10px;margin-bottom:10px;flex-wrap:wrap}
+.tab{display:inline-block;padding:5px 10px;font-weight:700;font-size:13px;color:var(--muted)}
+.tab.on{color:var(--text);box-shadow:inset 0 -2px var(--orange)}
+.count{background:var(--orange);color:#fff;border-radius:9px;padding:0 6px;font-size:11px;font-weight:800;margin-left:3px}
+.sortbox{font-size:12px;color:var(--muted)}
+.sortbox button{padding:3px 9px;border-radius:99px;font-weight:700;font-size:12px;color:var(--muted)}
+.sortbox button.on{background:var(--card2);color:var(--text)}
+.hint{display:flex;gap:8px;align-items:center;justify-content:space-between;background:#1c1328;border:1px solid #3d2a5c;border-radius:4px;padding:8px 12px;margin-bottom:10px;font-size:12.5px;color:#cdb8f0}
+/* POSTS */
+.post{display:grid;grid-template-columns:42px 1fr;background:var(--card);border:1px solid var(--line);border-radius:4px;margin-bottom:10px;position:relative;transition:transform .28s var(--ease),opacity .28s var(--ease) .06s,background-color .15s,border-color .15s;cursor:default}
+.post:hover{border-color:#6b6c6e}
+.post.sel{border-color:var(--blue)}
+.post.enter{animation:slide .34s var(--ease) both;animation-delay:calc(var(--i)*40ms)}
+@keyframes slide{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.post[data-out]{pointer-events:none;opacity:0}
+.post[data-out=a]{transform:translateX(34px);background:#14281a;border-color:var(--green);--c:var(--green)}
+.post[data-out=r],.post[data-out=w]{transform:translateX(-34px);background:#2a1519;border-color:var(--red);--c:var(--red)}
+.post[data-out=l]{transform:scale(.97);background:#2a2314;border-color:var(--yellow);--c:var(--yellow)}
+.post[data-out=b]{transform:scale(.93) rotate(-1.2deg);background:#33121a;border-color:var(--red);--c:var(--red)}
+.post[data-out]::after{content:attr(data-stamp);position:absolute;inset:0;display:grid;place-items:center;font:900 30px/1 Impact,"Arial Black",sans-serif;letter-spacing:3px;color:var(--c);opacity:.9}
+.vote{background:#151516;border-radius:4px 0 0 4px;display:flex;flex-direction:column;align-items:center;padding-top:8px;gap:2px;color:var(--muted);font-weight:700;font-size:12px}
+.vb{font-size:16px;line-height:1;padding:2px;color:var(--muted);cursor:default}
+.vote .up{color:var(--orange)}.vote .dn{color:var(--down)}
+.pbody{padding:8px 12px 8px 8px;min-width:0}
+.pmeta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.av{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;flex:none}
+.un{color:var(--text);font-weight:700}
+.role{font-size:10px;font-weight:800;border:1px solid var(--line);border-radius:3px;padding:0 5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.role.reg{color:#7fd48d;border-color:#2c5a35}.role.devb{color:#fff;background:var(--orange);border-color:var(--orange)}
+.flair{font-size:11px;font-weight:700;border-radius:99px;padding:1px 9px;color:#111}
+.f0{background:#7fd1ff}.f1{background:#ffd47f}.f2{background:#c9a8ff}.f3{background:#8fe3a8}.f4{background:#ffa99a}.f5{background:#e6e6e6}
+.rptag{color:var(--yellow);font-weight:700}
+.pbody h3{margin:6px 0 4px;font-size:17px;line-height:1.3;font-weight:600;color:#f0f2f3}
+.pbody p{margin:0;color:#c3c7c9;font-size:14px;white-space:pre-line}
+.memline{font-size:12.5px;color:#9db0b8;font-style:italic;margin:2px 0 4px;border-left:2px solid var(--line);padding-left:8px}
+.shot{margin:10px 0 2px}
+.shotimg{height:130px;border-radius:4px;border:1px solid var(--line);position:relative;overflow:hidden;background:linear-gradient(#10151f,#1f2a33 60%,#141a1d)}
+.shotimg::before{content:"";position:absolute;left:10%;right:10%;bottom:0;height:46px;background:#0a0d10;border:2px solid #2b3640;border-bottom:0}
+.shotimg .clk{position:absolute;left:12px;top:10px;font:700 14px "Courier New",monospace;color:#ff5a3a;text-shadow:0 0 8px #ff4500}
+.shotimg .mark{position:absolute;width:34px;height:34px;border:2px solid var(--red);border-radius:50%;transform:translate(-50%,-50%)}
+.shot figcaption{font-size:11.5px;color:var(--muted);margin-top:4px}
+.pfoot{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted);font-weight:700}
+.tools{display:flex;gap:5px;flex-wrap:wrap;margin-left:auto}
+.mt{border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:11.5px;font-weight:800;background:var(--card2);transition:background-color .15s,transform .15s,border-color .15s}
+.mt:hover{transform:translateY(-1px)}
+.mt.ap{color:var(--green)}.mt.ap:hover{background:#14281a;border-color:var(--green)}
+.mt.rm{color:#ff8a8a}.mt.rm:hover{background:#2a1519;border-color:var(--red)}
+.mt.lk{color:var(--yellow)}.mt.lk:hover{background:#2a2314;border-color:var(--yellow)}
+.mt.wn{color:#ffc26b}.mt.wn:hover{background:#2c2012;border-color:#ffc26b}
+.mt.bn{color:#ff5470}.mt.bn:hover{background:#33121a;border-color:#ff5470}
+.topcmt{margin-top:8px;padding:6px 10px;background:#141415;border-left:2px solid var(--line);font-size:12.5px;color:#a8acae;border-radius:0 3px 3px 0}
+.empty{text-align:center;padding:34px 16px;background:var(--card);border:1px dashed var(--line);border-radius:4px;color:var(--muted)}
+.empty b{display:block;font-size:18px;color:var(--text);margin-bottom:4px}
+/* SIDEBAR */
+aside .card{background:var(--card);border:1px solid var(--line);border-radius:4px;margin-bottom:12px;overflow:hidden}
+.ahd{background:#33a8ff22;padding:10px 12px;font-size:12px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--blue)}
+.ahd.or{background:#ff450022;color:var(--orange)}
+.abody{padding:12px}
+.abody p{margin:0 0 10px;font-size:13px;color:#c3c7c9}
+.astats{display:flex;gap:24px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.astats div b{display:block;font-size:17px;font-variant-numeric:tabular-nums}.astats span{font-size:11px;color:var(--muted)}
+.born{font-size:12px;color:var(--muted);margin-bottom:12px}
+.bigbtn{display:block;width:100%;background:var(--orange);color:#fff;font-weight:800;border-radius:99px;padding:10px;transition:transform .15s,filter .15s}
+.bigbtn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.bigbtn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.ghostbtn{display:block;width:100%;margin-top:8px;border:1px solid var(--text);border-radius:99px;padding:8px;font-weight:700;transition:background-color .15s}
+.ghostbtn:hover{background:var(--card2)}
+.rules ol{margin:0;padding:0 12px 10px 30px;font-size:13px;color:#c3c7c9}.rules li{padding:6px 0;border-bottom:1px solid var(--line)}.rules li:last-child{border:0}
+.logbox{padding:8px 12px 10px;font-size:12px;color:var(--muted);max-height:190px;overflow:auto}
+.logbox div{padding:3px 0;border-bottom:1px solid #232324}
+.keys{padding:10px 12px;font-size:12px;color:var(--muted)}
+kbd{background:var(--card2);border:1px solid var(--line);border-radius:3px;padding:0 5px;font:700 11px monospace;color:var(--text)}
+.mobbar{display:none}
+/* TOASTS */
+.toasts{position:fixed;right:14px;bottom:14px;z-index:40;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none;max-width:min(380px,calc(100vw - 28px))}
+.toast{background:#272729;border:1px solid #4a4b4d;border-left:4px solid var(--orange);border-radius:4px;padding:9px 12px;font-size:13px;box-shadow:0 6px 20px #0008;opacity:0;transform:translateX(24px);transition:transform .28s var(--ease),opacity .28s}
+.toast.in{opacity:1;transform:none}
+.toast.good{border-left-color:var(--green)}.toast.bad{border-left-color:var(--red)}.toast.clue{border-left-color:var(--purple);background:#221a33}
+.toast .d{display:block;margin-top:3px;font-size:11.5px;color:var(--muted)}
+.d .up{color:var(--green);font-style:normal;margin-right:8px}.d .dn{color:#ff7b8a;font-style:normal;margin-right:8px}
+/* OVERLAY */
+.overlay{position:fixed;inset:0;background:#030303e6;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.modal{width:100%;max-width:560px;background:var(--card);border:1px solid #4a4b4d;border-radius:10px;padding:22px;animation:pop .3s var(--ease);margin:auto}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.modal h1,.modal h2{margin:6px 0 8px;line-height:1.15}
+.modal h1{font-size:34px;letter-spacing:-.5px}.modal h2{font-size:24px}
+.modal p{color:#b9bdbf;margin:0 0 10px}
+.modal blockquote{margin:10px 0;padding:8px 12px;border-left:3px solid var(--orange);background:#141415;color:#d7dadc;font-style:italic}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;color:var(--orange);border:1px solid var(--orange);border-radius:99px;padding:2px 10px}
+.choice{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-top:8px;background:var(--card2);transition:border-color .15s,transform .15s}
+.choice:hover{border-color:var(--orange);transform:translateY(-1px)}
+.choice b{display:block}.choice span{display:block;font-size:12.5px;color:var(--muted)}
+.startbtn{margin-top:6px;width:100%;background:var(--orange);color:#fff;font-weight:900;border-radius:99px;padding:13px;font-size:15px;transition:transform .15s,filter .15s}
+.startbtn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.sign{display:inline-block;background:#120a0a;border:2px solid #442;padding:4px 14px;border-radius:4px;font:700 26px/1 "Courier New",monospace;color:#ff5a3a;text-shadow:0 0 12px #ff4500;margin-bottom:6px}
+details{margin:8px 0;color:#b9bdbf;font-size:13px}summary{cursor:pointer;font-weight:700;color:var(--text)}
+details ul{margin:6px 0;padding-left:20px}
+.yt{border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:10px 0;background:#0f0f0f}
+.ytthumb{height:150px;position:relative;background:linear-gradient(135deg,#7a1010,#1b0a2e 60%,#d9541e);display:flex;align-items:center;padding:14px}
+.ytthumb b{font:900 21px/1.1 Impact,"Arial Black",sans-serif;text-transform:uppercase;text-shadow:2px 2px 0 #000;max-width:72%}
+.ytthumb .dur{position:absolute;right:8px;bottom:8px;background:#000c;font-size:11px;font-weight:700;padding:1px 5px;border-radius:3px}
+.ytthumb .ytclk{position:absolute;right:14px;top:12px;font:700 22px "Courier New",monospace;color:#ff5a3a;text-shadow:0 0 10px #ff4500}
+.ytmeta{padding:8px 12px;font-size:12px;color:#aaa}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.stats div{background:var(--card2);border-radius:6px;padding:8px;text-align:center}.stats b{display:block;font-size:18px}.stats span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{font-size:12px;border-radius:99px;padding:3px 10px;background:#221a33;border:1px solid #4a3a73;color:#d6c4ff}
+.chip.no{background:transparent;border-color:var(--line);color:#5d5f61}
+.clue{padding:8px 0;border-bottom:1px solid var(--line)}.clue b{color:#d6c4ff}.clue span{display:block;font-size:12.5px;color:var(--muted)}.clue.no b{color:#5d5f61}
+.endrule{height:1px;background:var(--line);margin:10px 0}
+/* RESPONSIVE */
+@media(max-width:900px){
+ .cols{grid-template-columns:1fr}.hud{grid-template-columns:repeat(3,1fr)}
+ .search{display:none}.icon{width:60px;height:60px;font-size:30px;margin-top:-20px}.subinfo h1{font-size:21px}
+ .mobbar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:8px 12px}
+ .banner .shop,.banner .clk{left:auto;right:8%}.banner .canopy{left:4%}.banner .p1{left:calc(4% + 24px)}.banner .p2{left:calc(4% + 220px)}.banner .pump{left:calc(4% + 112px)}
+}
+@media(max-width:560px){.hud{grid-template-columns:repeat(2,1fr)}.post{grid-template-columns:34px 1fr}.tools{margin-left:0;width:100%}.subbtns .pill:not(.solid){display:none}.wordmark span{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body class="era-q">
+<nav class="nav">
+ <div class="logo" aria-hidden="true"><i></i></div>
+ <div class="wordmark">reddit <b>ranked</b> <span style="font-size:11px;color:var(--muted);font-weight:600">mod tools</span></div>
+ <div class="search">🔍 Search r/LastCustomer</div>
+ <div class="navr">
+  <span class="dayp" id="dayp">Day 1 / 14</span>
+  <button class="navbtn" id="bell" aria-label="Notifications">🔔<span class="badge" id="bellb">0</span></button>
+  <button class="navbtn" id="restart" aria-label="Restart run" title="Restart run">⟲</button>
+ </div>
+</nav>
+<div class="banner" aria-hidden="true"><div class="moon"></div><div class="canopy"></div><div class="pillar p1"></div><div class="pillar p2"></div><div class="pump"></div><div class="shop"></div><div class="clk">3:17</div><div class="ground"></div></div>
+<header class="subhead"><div class="subin">
+ <div class="icon" aria-hidden="true">🍌</div>
+ <div class="subinfo"><h1>r/LastCustomer</h1><div class="subtag">THE LAST CUSTOMER · a petrol station, one banana, 3:17 AM</div></div>
+ <div class="subbtns"><span class="trend hide" id="trend">🔥 TRENDING</span><span class="pill solid">Mod</span><span class="pill">Joined</span></div>
+</div></header>
+<div class="wrap">
+ <section class="hud" aria-label="Community stats">
+  <div class="cell"><label>Members</label><strong id="v-mem">12</strong><small id="v-delta">+0 today</small></div>
+  <div class="cell"><label>Online</label><strong id="v-on">3</strong><small>right now</small></div>
+  <div class="cell"><label>Health</label><strong id="v-h">80</strong><div class="meter mh"><i id="b-h"></i></div></div>
+  <div class="cell"><label>Chaos</label><strong id="v-c">8</strong><div class="meter mc"><i id="b-c"></i></div></div>
+  <div class="cell"><label>Mod rep</label><strong id="v-r">35</strong><div class="meter mr"><i id="b-r"></i></div><small id="v-rank"></small></div>
+  <div class="cell"><label>Mystery</label><strong id="v-m">0%</strong><div class="meter mm"><i id="b-m"></i></div><small id="v-stage"></small></div>
+  <div class="cell"><label>Queue pressure</label><strong id="v-q">0/8</strong><div class="meter mq" id="mq"><i id="b-q"></i></div></div>
+ </section>
+ <div class="cols">
+  <main>
+   <div class="tabs"><div><span class="tab on">Mod queue <span class="count" id="qn">0</span></span><span class="tab">Reports</span><span class="tab">Unmoderated</span></div>
+    <div class="sortbox">Sort: <button data-sort="new" class="on">New</button><button data-sort="top">Top</button><button data-sort="rep">Reported</button></div></div>
+   <div class="hint" id="hint"><span>💡 Click a post, then press <kbd>A</kbd> approve · <kbd>R</kbd> remove · <kbd>L</kbd> lock · <kbd>W</kbd> warn · <kbd>B</kbd> ban. Judge the post, not the flair.</span><button id="hintx" aria-label="Dismiss">✕</button></div>
+   <div id="feed"></div>
+   <div class="empty hide" id="empty"><b id="emptyt">Queue cleared</b><span id="emptyd"></span></div>
+  </main>
+  <aside>
+   <div class="card"><div class="ahd">About community</div><div class="abody">
+    <p id="about"></p>
+    <div class="astats"><div><b id="a-mem">12</b><span>Members</span></div><div><b id="a-on">3</b><span>Online</span></div></div>
+    <div class="born">🎂 Created on Day 1 · Day <span id="a-day">1</span> of 14</div>
+    <button class="bigbtn" id="endday">END DAY →</button>
+    <button class="ghostbtn" id="board">🕵 Case board <span class="count" id="bn">0/11</span></button>
+   </div></div>
+   <div class="card rules"><div class="ahd or">r/LastCustomer rules</div><ol>
+    <li>Tag your spoilers. The cashier has feelings.</li><li>No fake “DEV HERE” posts. Real devs are boring.</li><li>Don’t doxx real places or people. It’s a game.</li><li>One banana per post. Not two.</li></ol></div>
+   <div class="card"><div class="ahd">Moderation log</div><div class="logbox" id="log"></div></div>
+   <div class="card"><div class="keys"><kbd>A</kbd> Approve · <kbd>R</kbd> Remove · <kbd>L</kbd> Lock · <kbd>W</kbd> Remove + warn · <kbd>B</kbd> Remove + ban</div></div>
+  </aside>
+ </div>
+</div>
+<div class="mobbar"><button class="bigbtn" id="endday2">END DAY →</button></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<div class="overlay" id="intro"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="introt">
+ <span class="tag">JOHN BANANA PRESENTS</span>
+ <h1 id="introt" style="margin-top:12px">MODERATOR<br><span style="color:var(--orange)">MAYHEM</span> <span style="font-size:16px;color:var(--muted)">V2</span></h1>
+ <div class="sign">3:17 AM</div>
+ <p>You are the sole moderator of <b>r/LastCustomer</b>, 12 members strong. They’re investigating an indie game where a strange customer buys exactly one banana from a petrol station every night at 3:17 AM.</p>
+ <p>It’s stupid. It’s funny. It’s a little bit creepy. And there is a real explanation, if you keep the right posts alive. Then the internet finds you.</p>
+ <details><summary>How to play</summary><ul>
+  <li><b>Approve</b> good posts, <b>Remove</b> bad ones, <b>Lock</b> to cool a thread, <b>Warn</b> removes and scolds, <b>Ban</b> removes and exiles.</li>
+  <li>Genuine clues raise <b>Mystery</b>. Removing them hurts trust. Misinformation and spam hurt credibility.</li>
+  <li>Unreviewed posts pile up when you end the day. Queue pressure causes chaos.</li>
+  <li>Health, Chaos and Rep can end your run. You have 14 days. Something big is coming.</li></ul></details>
+ <button class="startbtn" id="start">OPEN THE MOD QUEUE</button>
+ <p style="margin:10px 0 0;font-size:12px;color:var(--muted)" id="meta"></p>
+</div></div>
+
+<div class="overlay hide" id="modal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle">
+ <span class="tag" id="mtag"></span><h2 id="mtitle"></h2><div id="mtext"></div><div id="mchoices"></div>
+</div></div>
+
+<div class="overlay hide" id="end"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="endt">
+ <span class="tag" id="endtag">RUN COMPLETE</span><h2 id="endt"></h2><div id="endtext"></div>
+ <div class="stats" id="endstats"></div><div id="endextra"></div>
+ <button class="startbtn" id="again">RUN IT BACK</button>
+</div></div>
+
+<script>
+"use strict";
+(function(){
+/* ===================== HELPERS ===================== */
+var MAXDAY=14;
+var $=function(id){return document.getElementById(id)};
+var rnd=function(a,b){return a+Math.floor(Math.random()*(b-a+1))};
+var pick=function(a){return a[Math.floor(Math.random()*a.length)]};
+var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
+var reduced=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+var esc=function(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
+var fmt=function(n){return Math.round(n).toLocaleString("en-GB")};
+var fmtK=function(n){return n>=1000?(n/1000).toFixed(n>=10000?0:1)+"k":String(n)};
+var uid=0;
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+
+/* ===================== MYSTERY: THE TRUTH =====================
+ The Last Customer is a tribute. Kessler Services (J3, 17 miles) was the dev’s family petrol station.
+ Mr. Alder, a night-shift nurse, bought one banana at 3:17 AM for eleven years. The station closed in March 2019
+ and he stopped coming. The game keeps real time and keeps the till open for him. It isn’t a haunting. It’s a goodbye. */
+var CL={
+ time:["The Night Shift Never Stops","The game keeps real time. Nights pass and bananas sell even while it’s closed.",10],
+ beeps:["3-1-7","The banana scan beeps three, one, seven. Numbers, not Morse. A deliberate cue.",8],
+ radio:["‘Welcome Back’","The shop radio greets players who return after being away, as if the station remembers.",12],
+ shadow:["ATTENDANT_02","A second figure in the fridge reflection. A real asset in the files that never spawns.",8],
+ sign:["JCT 3 · 17 MI","A road sign outside the window points to Kessler Services, a real place.",10],
+ voicemail:["‘We Are Now Closed’","The number on every receipt reaches a Kessler Services voicemail, then beeps 3-1-7.",12],
+ waited:["Customer Waited","The log records the customer waiting for you when you’re late. He leaves if you never come.",8],
+ coins:["Paid in Coins","The dev’s only hint: ‘He always pays in coins.’ A habit of a real person.",8],
+ news:["Services to Close","A 2019 news clip: Kessler Services shut after 31 years. A regular came by one last time.",14],
+ plea:["Please Don’t Go Looking","The dev asks the community to keep the real people out of it.",6],
+ truth:["It’s a Goodbye","The station was the dev’s family’s. Mr. Alder bought a banana every night at 3:17. The game keeps the till open for him.",18]
+};
+var CLN=Object.keys(CL).length;
+
+/* ===================== USERS ===================== */
+var USERS={
+ PixelDetective:{role:"Veteran",col:"#2e8b7a",reg:1},
+ MorseMaven:{role:"Theorist",col:"#8e5bd8",reg:1},
+ ActuallyPlayedIt:{role:"Regular",col:"#3a7bd5",reg:1},
+ clockgoblin:{role:"Regular",col:"#c9822b",reg:1},
+ SaveFileSleuth:{role:"Dataminer",col:"#4a9d5b",reg:1},
+ LowResLegend:{role:"Screenshots",col:"#9a6b4f",reg:1},
+ BananaEnjoyer:{role:"Memer",col:"#c9a81f",reg:1},
+ NightShiftNora:{role:"Regular",col:"#cf5b8f",reg:1},
+ OGMember_0004:{role:"OG",col:"#707070",reg:1},
+ ArchiveAnna:{role:"Archivist",col:"#2a9fb0",reg:1},
+ wren_dev_:{role:"Dev?",col:"#ff4500",reg:1,dev:1},
+ LeakLord_Dave:{role:"Leaks"},The3AMCustomer:{role:"???",col:"#222"},NewHere_pls:{role:"New"}
+};
+function U(n){if(!USERS[n]){var h=0;for(var i=0;i<n.length;i++)h=(h*31+n.charCodeAt(i))%360;USERS[n]={role:"Member",col:"hsl("+h+",42%,40%)"}}if(!USERS[n].col){var g=0;for(var j=0;j<n.length;j++)g=(g*31+n.charCodeAt(j))%360;USERS[n].col="hsl("+g+",42%,40%)"}return USERS[n]}
+
+/* ===================== CONSEQUENCE TABLE =====================
+ [health, chaos, rep, mystery, members]   a=approve r=remove l=lock w=remove+warn b=remove+ban */
+var EFF={
+ clue:{a:[3,-2,3,0,3],r:[-6,2,-6,0,-3],l:[-2,0,-1,0,1],w:[-4,1,-5,0,-1],b:[-9,5,-9,0,-5]},
+ theory:{a:[2,-1,2,2,2],r:[-2,0,-1,0,0],l:[-1,-1,0,1,0],w:[-2,0,-2,0,0],b:[-6,3,-6,0,-2]},
+ wild:{a:[1,2,0,0,2],r:[-1,-1,0,0,0],l:[0,-1,0,0,0],w:[-1,0,-1,0,0],b:[-4,2,-4,0,-1]},
+ misinfo:{a:[-3,6,-6,-2,1],r:[1,-3,3,0,0],l:[0,-2,0,0,0],w:[1,-2,2,0,0],b:[2,-2,3,0,0]},
+ spam:{a:[-4,3,-8,0,0],r:[1,-1,3,0,0],l:[0,0,-1,0,0],w:[0,0,-1,0,0],b:[2,-2,4,0,0]},
+ meme:{a:[2,1,1,0,4],r:[-2,-1,0,0,-1],l:[-1,-1,0,0,0],w:[-2,0,-1,0,0],b:[-5,2,-4,0,-2]},
+ larp:{a:[1,3,0,0,4],r:[0,-2,1,0,0],l:[0,-2,0,0,0],w:[0,-1,1,0,0],b:[-2,1,-1,0,-1]},
+ hot:{a:[-4,8,-4,0,2],r:[0,-4,2,0,0],l:[-1,-7,3,0,0],w:[1,-3,2,0,0],b:[0,-4,2,0,0]},
+ drama:{a:[-1,4,1,0,1],r:[-1,3,-2,0,0],l:[-1,-3,0,0,0],w:[-2,0,-2,0,0],b:[-3,5,-4,0,-2]},
+ dev:{a:[4,-1,5,0,5],r:[-8,4,-10,0,-5],l:[-2,0,-3,0,0],w:[-6,3,-8,0,-3],b:[-12,8,-15,0,-8]},
+ newbie:{a:[2,0,2,0,3],r:[-2,0,-1,0,-1],l:[-1,0,0,0,0],w:[-2,0,-2,0,-1],b:[-4,2,-4,0,-2]},
+ off:{a:[-1,1,-1,0,0],r:[1,-1,1,0,0],l:[0,0,0,0,0],w:[0,0,0,0,0],b:[-1,1,-1,0,0]},
+ dox:{a:[-12,10,-14,0,0],r:[3,-4,5,0,0],l:[0,-4,2,0,0],w:[1,-2,2,0,0],b:[3,-3,5,0,0]}
+};
+var BAD={spam:1,misinfo:1,dox:1,hot:1};
+var VERB={a:"Approved",r:"Removed",l:"Locked",w:"Warned",b:"Banned"};
+var STAMP={a:"APPROVED",r:"REMOVED",l:"LOCKED",w:"WARNED",b:"BANNED"};
+var M={
+ clue:{a:["Clue filed. {u} gets a smug emoji from the regulars.","The theory board lights up. {u} was onto something."],r:["You removed a genuine clue. The regulars noticed.","{u}’s evidence is gone. Somewhere, a till beeps."],l:["Locked. Safe, but nobody can discuss it. Spiritually unhelpful."],w:["You warned {u} for sharing evidence. Bold."],b:["You banned {u} for finding clues. The thread goes very quiet."]},
+ theory:{a:["A reasonable theory joins the pile.","Approved. The comment section is thoughtful, for once."],r:["Removed. {u} sighs and starts a 12-part draft."],l:["Locked. The theory stays visible but silent."],w:["{u} has been warned about… theorising?"],b:["Banned for a theory. The regulars are concerned."]},
+ wild:{a:["Absurd and harmless. The comments are a delight.","Approved. Chaos creeps up a notch, joy creeps up a notch."],r:["Removed. {u} shrugs and invents another theory."],l:["Locked. The raccoons will have to wait."],w:["Warned. {u} replies ‘noted’ with 40 emojis."],b:["Banned for being weird. Harsh."]},
+ misinfo:{a:["You approved misinformation. The comments are already building on it.","Credibility took a hit. Someone is screenshotting this."],r:["Removed. A tiny victory for facts.","The fake leak is gone. Rumours however are forever."],l:["Locked. Still visible. Still wrong."],w:["{u} has been warned. They call this ‘censorship’."],b:["{u} banned. The leak economy takes a dip."]},
+ spam:{a:["You approved spam. Reputation plummets and a bot says thanks.","Spam approved. The community side-eyes you."],r:["Spam removed. Satisfying."],l:["You locked spam. Why."],w:["You warned a bot. It did not read the warning."],b:["The spammer has been sent to the shadow realm."]},
+ meme:{a:["Approved. The memes are the lifeblood of this place.","Upvotes rain. {u} is insufferable now."],r:["Removed a meme. The room gets 14% colder."],l:["Locked. Memes need comments to live."],w:["{u} was warned about humour."],b:["Banned a memer. The meme economy collapses."]},
+ larp:{a:["Approved. Engagement rises. So does confusion.","The roleplay continues. A newcomer is already scared."],r:["Removed. The roleplay pauses. For now."],l:["Locked. The customer will return."],w:["Warned. {u} replies in character."],b:["Banned. They will be back with a new account."]},
+ hot:{a:["You approved a flamewar starter. Bold.","The comments are on fire."],r:["Removed. Temperatures drop slightly."],l:["Locked. Chaos contained, comments frustrated."],w:["Warned. {u} calls you ‘literally 1984’."],b:["Banned. The flames die. So does one angry man."]},
+ drama:{a:["You let the accusation stand. Transparency or chaos? Yes.","Approved. Mods look transparent. Mods also look nervous."],r:["Removed. This looks exactly like what they accused you of."],l:["Locked. The accusation stays, the argument doesn’t."],w:["Warned. {u} screenshots the warning."],b:["Banned for accusing mods. That went how you’d expect."]},
+ dev:{a:["Approved. The sub reads every word twice.","The (probable) dev’s post is up. Everyone reads it twice."],r:["You removed a post from the (probable) dev. Awkward.","Removed. The regulars are quietly horrified."],l:["Locked. The dev’s post can’t be discussed. Odd choice."],w:["You warned the dev. Yes, really."],b:["You banned the dev. The mystery just got much harder."]},
+ newbie:{a:["Approved. A newcomer feels welcome.","Approved. Three regulars answer kindly. One answers rudely."],r:["Removed. Gatekeeping, but the queue thanks you."],l:["Locked. Nobody can answer them now."],w:["Warned a newcomer. They have no idea what they did."],b:["Banned a newcomer for a question. Harsh."]},
+ off:{a:["Approved. This has nothing to do with bananas."],r:["Removed. Off-topic cleaned up."],l:["Locked. Fine."],w:["Warned for being off-topic."],b:["Banned for off-topic. Dramatic."]},
+ dox:{a:["You approved a doxx thread. People are already planning road trips.","Approved. This will go badly."],r:["Removed. Hopefully before anyone got in a car."],l:["Locked, but the address is still there."],w:["Warned and removed. Good call."],b:["Banned. Real people stay out of it."]}
+};
+
+/* ===================== POST POOL ===================== */
+function P(id,u,fl,k,t,b,o){return Object.assign({id:id,u:u,fl:fl,k:k,t:t,b:b,d:[1,14],e:"*"},o||{})}
+var POOL=[
+/* ---- the quiet era and clues ---- */
+P("time","PixelDetective","Evidence","clue","Night 1 notes: I closed the game at 11pm. At 9am the till log says ‘customer served: 1’.","I know how this sounds. The game was closed the whole time. But the log shows a banana sale stamped 03:17 and a receipt number one higher than yesterday’s. Either it simulates the night while you’re away, or something else is working the register. Check your own logs before I write this up properly.",{clue:"time",fd:1,cmt:"u/clockgoblin: mine says the same. Two nights, two bananas. I am not okay."}),
+P("potassium","BananaEnjoyer","Meme","meme","bro is NOT getting his potassium normally 💀","3:17 AM. One banana. Not two. Not a bunch. ONE. The man has discipline and I respect it.",{fd:1}),
+P("spam1","SpamBot_9000","Giveaway","spam","FREE ROBUX CLICK MY PROFILE","Limited time. Also click my profile. Also free robux.",{fd:1}),
+P("morse1","MorseMaven","Decoded","wild","THE TILL BEEPS ARE MORSE. I decoded it. It says SEND HELP.","I slowed the audio to 40% and wrote it out by hand. ·· ·—· ·—·· ·—— … Look, I know the first two letters are shaky, but SEND HELP is clearly in there. Someone is trapped in the register. Don’t @ me, I have 14 pages.",{fd:2,d:[1,7],cmt:"u/PixelDetective: It’s three beeps, a pause, one beep, a pause, seven beeps. Not Morse. Please stop slowing audio down."}),
+P("beeps","ActuallyPlayedIt","Evidence","clue","The scanner beep isn’t Morse. It’s 3-1-7.","I counted the beeps on the banana scan across twelve purchases. Always three, a pause, one, a pause, seven. Numbers, not letters, which matches the timestamp. Probably a deliberate audio cue rather than a hidden message, but it confirms the dev planted 3:17 in the sound design too.",{clue:"beeps",d:[2,14]}),
+P("realtime","clockgoblin","Theory","theory","Theory: the game simulates nights in real time, even when closed","Occam’s razor. If 3:17 means 3:17 on YOUR clock, the game must check system time on launch and backfill missed nights. Fits the till log, fits everything. Sounds boring until you realise it means the customer ‘visits’ whether you play or not.",{d:[1,6],res:{after:2,yes:true,text:"u/wren_dev_ replied in a thread: “It keeps time. It would be rude not to.” u/clockgoblin was right."}}),
+P("radio","SaveFileSleuth","Possible clue","clue","Radio says ‘welcome back’ on night 4. I have never reached night 4.","Fresh save. Played nights 1–3, then left it closed for a week. When I reloaded, the radio said ‘welcome back’ on night 4. Friends who play every night don’t get the line. It’s a returning-player flag. Why would a petrol station care?",{clue:"radio",d:[2,14]}),
+P("shadow","LowResLegend","Screenshot","clue","The shadow behind the cashier is NOT the player model","I pulled the frame from my clip. The reflection in the drinks fridge shows someone standing by the office door. The player model is short and blocky. This one has shoulders and a coat. I datamined an asset called ATTENDANT_02 that never spawns in normal play.",{clue:"shadow",d:[2,14],scr:"Fridge door reflection: a second figure, taller than the player"}),
+P("raccoons","RaccoonTruther","Theory","wild","7 raccoons in a trench coat. Change my mind.","Count the banana peels in the bin on night 6. There are seven. Seven raccoons, one coat, one banana (shared). I have a spreadsheet. The spreadsheet has one row.",{}),
+P("discuss","ActuallyPlayedIt","Discussion","theory","Is the 3:17 thing intentional or just a bug?","Fair question. I’d say intentional, since it shows up across four builds and the soundtrack has a three-one-seven pulse underneath. Genuinely looking for a dissenting view if anyone has one.",{d:[1,5]}),
+P("lurker","Lurker_Lena","Question","newbie","Long-time lurker, first post: I got the game running and I’m scared of the night shift","Is it normal to feel like the customer is looking at me through the screen? Or does everyone feel this? Asking for a friend (me).",{d:[1,7]}),
+P("sour","SourBean","Opinion","hot","This game is overrated and everyone here is pretending to understand it","You found a till log. Congratulations. It’s a clock. Touch grass, hug a person, stop treating a banana like it’s scripture.",{d:[2,14]}),
+P("larp1","The3AMCustomer","Roleplay","larp","I am the customer. I will visit your subreddit at 3:17. Keep the shelf stocked.","One banana. Not two. Do not make me ask twice. (This is a roleplay post. Probably.)",{d:[2,14]}),
+P("leak1","LeakLord_Dave","LEAK","misinfo","LEAK: the customer’s file name is MR_ALDER and he’s the villain of Last Customer 2","Source: my cousin’s friend works at a studio near the studio. 100% real. Screenshots available on request (I do not have them).",{d:[2,14],cmt:"u/PixelDetective: Dave, you have said ‘100% real’ about eleven things this week."}),
+P("leak2","LeakLord_Dave","EXCLUSIVE","misinfo","EXCLUSIVE: release date for ‘The Last Customer 2: Express Lane’ leaked","Screenshots in my Discord. Invite costs 5 bananas. DM me. (The release date is next Tuesday. Or Friday. Or both.)",{d:[3,14]}),
+P("dev1","wren_dev_","Developer","dev","Thanks for the kind words. He always pays in coins.","I saw the thread. Didn’t expect anyone to notice the coin sound. Please be gentle with the game. It’s small and it means a lot to me. I’ll say more when I can. — T.",{clue:"coins",d:[3,9],cmt:"u/clockgoblin: ‘I’ll say more when I can’ is the most dev thing I have ever read."}),
+P("voicemail","NightShiftNora","ARG","clue","There’s a phone number on every receipt. I called it. Don’t call it.","(555) 0317, printed in the corner of every receipt in a font so small I assumed it was decoration. It rings four times, then a woman’s recorded voice: ‘Thank you for calling Kessler Services. We are now closed.’ Then three beeps. A pause. One. A pause. Seven. I did not enjoy that.",{clue:"voicemail",d:[4,14]}),
+P("sign","LowResLegend","Screenshot","clue","Look out the back window after the 2nd customer. There’s a road sign.","Frame-by-frame on night 3. A green sign, blurry, in the rear window. Reads JCT 3 · 17 MI · KESSLER SVCS. That looks like a real place name, not a random one.",{clue:"sign",d:[3,14],scr:"Rear window: green road sign, ‘JCT 3 · 17 MI · KESSLER SVCS’"}),
+P("waited","SaveFileSleuth","Evidence","clue","My till log has an entry for a night I wasn’t playing: ‘customer waited. customer left.’","Dated last Tuesday. I was at work. The line sits between two normal sales. It reads like the game logging that he showed up, you weren’t there, and he went home. I have never felt guilty about a pixel before.",{clue:"waited",d:[3,14]}),
+P("memorial","NightShiftNora","Discussion","theory","Genuine question from someone who worked nights at a garage: is the customer based on a real person?","Ex-garage clerk, three years of night shifts. Regulars were weirdly sacred. Someone who buys exactly one banana at exactly the same minute every night is a person the clerk would worry about if he didn’t show. The game feels written by someone who lived that.",{d:[3,14],res:{after:4,yes:true,text:"u/wren_dev_: “He’s based on someone real. I won’t say more. I’m sorry.” u/NightShiftNora called it."}}),
+P("ghost","HauntedHatchback","Theory","theory","The cashier is dead and the customer is the only living thing in the shop","Night clerks in horror games are always dead. The player is the ghost, the customer is the only living person, and the banana is the offering he leaves. It explains why the cashier never blinks.",{d:[2,14],res:{after:2,yes:false,text:"A datamined blink animation turns up. The dev: “He blinks. It’s one frame. Stop calling my clerk dead.” That theory has been disproven."}}),
+P("loop","LoopedLarry","Theory","theory","The customer is you from your previous save file. It’s a time loop.","Every night the customer is the player from the last save, buying the same item to remember who they were. The banana is a memory anchor. Think about it.",{d:[2,14],res:{after:3,yes:false,text:"SaveFileSleuth checks: the customer has no link to save data at all. Time-loop theory is dead. RIP."}}),
+P("market","PlotTwistPaul","Theory","theory","This is viral marketing for a much bigger game. The mystery IS the product.","Nobody makes a game this small by accident. Wait for the reveal trailer. Mark the date. I will be insufferable.",{d:[3,14],res:{after:4,yes:false,text:"u/wren_dev_: “There is no bigger game. There is just this one.” The marketing theory is disproven."}}),
+P("bananafirst","BananaTruther","Theory","theory","It’s about the BANANA. The time is a red herring.","Clockgoblin keeps screaming about 3:17. But why one banana? Why not milk, or a newspaper? The item is the signature. The time is just when he’s free.",{d:[2,14],cmt:"u/clockgoblin: bananas are not a personality, BananaTruther"}),
+P("timefirst","clockgoblin","Theory","theory","It’s about the TIME, not the banana. Please stop making it about fruit.","A banana is whatever he could grab. 3:17 is the real signature. It’s the same minute every single night, and it’s built into the beeps too. BananaTruther, I say this with love: touch grass.",{d:[2,14],cmt:"u/BananaTruther: the banana is the point and you know it, clock boy"}),
+P("accuse","SuspiciousSue","Accusation","drama","PixelDetective is the dev. Check his post times.","He is right too often. He posts at 3:17 AM. He has ‘notes’. NOTES, people. Mods, are you in on this?",{d:[4,14],fx:{a:[-2,5,0,0,1]},cmt:"u/PixelDetective: I am a retired accountant. This is just my hobby."}),
+P("purgatory","PurgatoryPete","Theory","wild","Hot take: the petrol station is Purgatory and pump 4 is out of order because it’s for Heaven","The ‘closed’ sign in the corner is a metaphor. The customer is waiting for a refund. The banana is a ticket. I will not be taking questions.",{d:[2,14]}),
+P("toaster","CasualCarl","Question","off","Has anyone tried running this game on a toaster?","Asking because mine says ‘Not Responding’ and also ‘Bread’.",{}),
+P("math","MorseMaven","Decoded","wild","3+1+7 = 11. 11 is two ones. ONE BANANA. TWO ONES.","I need to lie down. The numbers are talking to me and one of them is lying. Also the receipt total is £0.89 and 8+9=17. SEVENTEEN. Do you see?",{d:[4,14]}),
+P("pov","BananaEnjoyer","Meme","meme","POV: you’re the cashier and he looks at you like he knows what you did","(no, I don’t know what you did either)",{}),
+P("routine","Mem3Lord","Meme","meme","petrol station simulator but the customer’s routine is better than mine","he has one thing to do per day and he does it perfectly. I have been trying to drink water since Tuesday.",{}),
+P("cat","Mem3Lord","Meme","wild","My cat sits in front of the monitor at 3:17 every night now. Coincidence?","She has never done this before. She stares at the screen like she has a bank to rob. The game is closed. The monitor is off. She is waiting.",{d:[3,14]}),
+P("petrol","CasualCarl","Discussion","off","Petrol prices are insane lately, anyone else?","Not strictly about the game but the real-life version of the petrol station costs me £70 a fill-up and no one buys a banana from me.",{}),
+P("chair","CasualCarl","For sale","off","Selling a barely used gaming chair, DM me","Great condition. Slight banana smell. You know the one.",{}),
+P("qr","QRQueen","ARG","misinfo","Found a hidden QR code in the game files. It leads to a Discord that wants your password to ‘verify’ you’re not the customer.","It’s the hidden entrance to the next chapter! Just scan and log in with your Reddit account. DO NOT tell the mods. They’re scared of what you’ll find.",{d:[3,14],cmt:"u/SaveFileSleuth: there is no QR code in the files. I checked. Twice."}),
+/* ---- viral era ---- */
+P("newb1","NewHere_pls","Question","newbie","Hi sorry, I just watched a video. Is the banana man real??","I’m not a gamer, I’m just here because the video made me anxious. Is the customer an actual person? Should I be worried? Is this safe to play?",{e:"v"}),
+P("newb2","NewHere_pls","Question","newbie","Wait, the game isn’t free?? I just want to see him.","How much is it? Is it on my phone? Is there a version where I can just watch him buy the banana without playing the rest of it?",{e:"v"}),
+P("newb3","NewHere_pls","Help","newbie","I played for five minutes and nothing happened. Is it broken?","It’s 4PM. Am I supposed to wait until 3:17? In the morning?? Is there a speed-up button? I have an exam tomorrow.",{e:"v"}),
+P("newb4","VidWatcher77","Question","newbie","Which video is everybody here from? Asking for me and 4,000 friends","We all came from the same one, right? I need the link, my friend got it from a stream, and the stream got it from the video.",{e:"v"}),
+P("newb5","ScaredSam","Help","newbie","Anyone know a good game to play after this one? I’m scared.","I played at 3:17 AM like the video said. Now I’m awake. Please recommend something with bright colours and no petrol.",{e:"v"}),
+P("larp2","Cashier_No_2","Roleplay","larp","I am the cashier. Please stop spoiling the night shift. I am ALSO scared.","I have worked here for 11 years and I have never been paid. I just stand here. Sometimes the radio talks to me. [This is a roleplay. Please don’t message me.]",{e:"v"}),
+P("larp3","Pump4_OutOfOrder","Roleplay","larp","[In character] Closing in five minutes. Please don’t ask what happened to Pump 4.","We apologise for any inconvenience. The toilets are for customers only. The banana shelf is not for sale. Please keep your hands where the cameras can see them.",{e:"v"}),
+P("larp4","The3AMCustomer_2","Roleplay","larp","You cannot ban what is already in the building.","New account. Same customer. I will be buying a banana at 3:17. You will be restocking the shelf.",{e:"*",if:function(s){return s.us.The3AMCustomer&&s.us.The3AMCustomer.b}}),
+P("leak3","LeakLord_Dave","OFFICIAL","misinfo","DEV HERE (verified by vibes). The customer is a Roomba.","I made the game. Trust me. I’m the dev. I have a signed photo of a banana. The Roomba is the villain of the sequel. DM me for the sequel.",{e:"v"}),
+P("leak4","BreakingBanana","BREAKING","misinfo","BREAKING: game pulled from stores after legal complaint. Archive links in comments.","This is not a drill. Download it before it’s gone! (Comments: 14 links, 13 are malware, 1 is a recipe.)",{e:"v"}),
+P("leak5","DealHunterDee","Deal","misinfo","Steam page leak: game is going free for 3 days (screenshot cropped)","I won’t say which day. But it’s 100% true. Source: my cousin’s friend’s calendar.",{e:"v"}),
+P("hot1","TakeFactory","Hot take","hot","I DID NOT PLAY THE GAME but the banana represents capitalism","I’ve seen three clips and a thumbnail. I’m basically an expert. Lock this thread so the ‘real fans’ can’t gatekeep me.",{e:"v"}),
+P("hot2","GatekeepGary","Opinion","hot","r/LastCustomer is just FNAF for people who think they’re smart","I said what I said. Fight me. The cashier is not a mystery, he’s a hostage to your overthinking.",{e:"v"}),
+P("drama1","ModsAreBananas","Meta","drama","Mods are suppressing the truth. I got removed for saying BANANA.","I was removed for ‘spam’. My post was one word: BANANA. Repeated 400 times. It was a statement. This is censorship and I will be telling everyone.",{e:"v"}),
+P("drama2","OGMember_0004","Meta","drama","I was here when we had 12 members. Now it’s tourists and a man doing a bit.","Can we please get an ‘OG’ flair so people can tell who actually played the game? No offence to the 40,000 people who just discovered bananas.",{e:"v",fx:{a:[0,2,1,0,0],r:[-2,1,-2,0,0]}}),
+P("drama3","ConcernedMother47","Concern","drama","This game is cursed. My son hasn’t slept since 3:17 AM. Moderators, DO SOMETHING.","He sits there in the dark waiting for the customer. This is on YOU for allowing this content. I will be contacting someone. I don’t know who.",{e:"v"}),
+P("recap","ActuallyPlayedIt","Newcomer guide","theory","Newcomer FAQ: what we know, what we don’t, and what’s just vibes","A short, sober summary for the people arriving from the video: (1) the game keeps real time, (2) 3:17 is deliberate, (3) the customer seems based on something real, (4) NO, it is not cursed. Please read before asking whether the banana man is real.",{e:"v",w:1.6,d:[5,14],fx:{a:[3,-3,3,2,3]}}),
+P("moon","MoonTruther","Theory","wild","The customer is the Moon. Ever notice the Moon is out at 3:17? (It isn’t.)","The Moon buys one banana because it needs potassium to maintain orbit. I will not be accepting counter-arguments or astronomy.",{e:"v"}),
+P("essay","86PartEssay","Video","wild","My 86-part video proves the petrol station is in the Backrooms (part 1)","Part 1 is four hours long and mostly me explaining what ‘liminal’ means. Parts 2–86 are coming. Please like, subscribe, and approve this thread.",{e:"v"}),
+P("meme4","BananaEnjoyer","Meme","meme","me explaining the lore to my mum who has never seen a petrol station","she asked why he doesn’t just buy a bag of bananas and I had to leave the room.",{e:"v"}),
+P("meme5","Mem3Lord","Meme","meme","r/LastCustomer before vs after the video","[a campfire becoming a forest fire, but the forest is made of bananas]",{e:"v"}),
+P("spam2","ShopLinker","Merch","spam","BUY MY OFFICIAL LAST CUSTOMER MERCH (not affiliated)","T-shirts, mugs, and a banana-scented candle. All proceeds go to me. Link in profile.",{e:"v"}),
+P("spam3","CryptoBananaCoin","Crypto","spam","$BNNA coin going to the moon. The customer is an early investor.","The customer buys one banana every night. That’s dollar-cost averaging, people. Join the Discord. (It is not a Discord.)",{e:"v"}),
+P("spam4","ShiftUniformPromos","Giveaway","spam","Win a free night-shift uniform! Just enter your password","Official-looking giveaway. Totally official. Enter your Reddit password to claim. We would never use it for anything bad.",{e:"v"}),
+P("dox","RoadTripRandy","Found it","dox","FOUND THE REAL STATION (it’s on a map!). Going to look through the windows at 3:17 tonight 🙂","Kessler Services, junction 3. It looks closed. There’s a light on in the back. I’m bringing friends, a thermos and a banana. Who’s in? Looking for a ride.",{e:"v",req:["sign"],d:[7,14]}),
+P("news","ArchiveAnna","Evidence","clue","I found a 2019 local news clip: ‘Kessler Services to close after 31 years’","The junction 3 services closed in March 2019. The article says the last night shift ended at 3:30 AM, and that ‘a regular came by one last time’. No name. Just that he ‘always bought the same thing’.",{clue:"news",req:["sign"],d:[6,14]}),
+P("plea","wren_dev_","Developer","dev","Thank you. All of you. Please don’t go looking for the people.","I didn’t expect this many of you. The station isn’t a secret, it’s just personal. Please don’t go looking for the people involved. They’re not part of the game. They’re part of my family.",{clue:"plea",req:["sign"],e:"v",d:[7,14],cmt:"u/NightShiftNora: ❤️ understood."}),
+P("truth","PixelDetective","Evidence","clue","Night 1 notes (final): it’s not a mystery. It’s a goodbye.","The station was Kessler Services, run by the dev’s family. The customer file is MR_ALDER, a night-shift nurse who bought exactly one banana at 3:17 AM for eleven years. The station closed in March 2019. He stopped coming. The dev built the game so there’d always be a station open at 3:17. The ‘offline nights’ aren’t a haunting. They’re the dev refusing to let the till stay empty.",{clue:"truth",req:["news"],d:[9,14]}),
+P("creator","GlitchGoblinYT","Creator","off","Thanks for the support! {vid}","Part 2 drops Friday. I’m reading every comment (I am not reading every comment). Please don’t ban me, I have a mum.",{e:"v",if:function(s){return !!s.viral},fx:{a:[2,1,1,0,3],r:[-2,1,-2,0,-1],l:[0,0,0,0,0],w:[-2,1,-2,0,-1],b:[-4,3,-4,0,-3]}}),
+P("backlash","OGMember_0004","Meta","drama","Why was u/{ban} banned?? He was one of us.","I’ve been here since 12 members. He found half the clues. I’m not saying the mods are bad. I’m saying u/{ban} is gone and the clues are mine now.",{if:function(s){return !!s.lastBanReg&&!s.used.has("backlash")},fx:{a:[3,-1,2,0,0],r:[-3,3,-3,0,0],l:[-1,-1,0,0,0],w:[-3,2,-3,0,0],b:[-5,4,-5,0,0]}}),
+P("buried","ActuallyPlayedIt","Meta","drama","Can we talk about the clue threads that keep getting removed?","Respectfully, a few genuine finds have vanished from the queue. I know modding is hard. I’m not angry, I’m confused. Is there a rule I missed?",{if:function(s){return s.cnt.buried>=2},fx:{a:[2,-1,2,0,0],r:[-3,3,-3,0,0],l:[0,-1,0,0,0],w:[-3,2,-3,0,0],b:[-6,4,-6,0,0]}})
+];
+var POOLBYID={};POOL.forEach(function(p){POOLBYID[p.id]=p});
+
+var CMT={
+ clue:["u/gas_station_gary: filing this under ‘things I wish I hadn’t read at 3 AM’","u/clockgoblin: saved. screenshotting. printing. framing."],
+ theory:["u/ActuallyPlayedIt: plausible. Needs a second source.","u/BananaTruther: nope, banana is the point"],
+ wild:["u/Mem3Lord: I did not expect to be this invested in raccoons","u/NightShiftNora: …okay but why is this making sense"],
+ misinfo:["u/PixelDetective: source?","u/SaveFileSleuth: I checked the files. This isn’t in them."],
+ spam:["u/BananaEnjoyer: bot detected","u/clockgoblin: report, report, report"],
+ meme:["u/BananaEnjoyer: 💀💀💀","u/Mem3Lord: this is the one"],
+ larp:["u/NightShiftNora: the commitment is honestly impressive","u/NewHere_pls: wait is this real?? should I be scared"],
+ hot:["u/ActuallyPlayedIt: this is going to go well","u/OGMember_0004: and here we go"],
+ drama:["u/ModsAreBananas: this is why we need transparency","u/SourBean: popcorn.gif"],
+ newbie:["u/ActuallyPlayedIt: welcome! Read the FAQ and breathe","u/BananaEnjoyer: just wait until night 4"],
+ off:["u/CasualCarl: sorry wrong sub (not sorry)","u/Mem3Lord: bold of you to come here"],
+ dox:["u/NightShiftNora: please don’t. It’s someone’s family’s place.","u/PixelDetective: please do not do this"],
+ dev:["u/clockgoblin: it’s HIM","u/SuspiciousSue: this proves nothing"]
+};
+var MEM={
+ PixelDetective:{a:"Continuing my notes, thanks for letting the last one through.",r:"Reposting my note after it was removed. I’ll keep it factual.",w:"Noted the warning. Keeping this one rigorous."},
+ MorseMaven:{a:"THANK YOU for approving my last decode. This one is bigger.",r:"You removed my decode. I decoded the removal. It says ‘NO’.",w:"I have decoded your warning. It has 41 dots in it."},
+ LeakLord_Dave:{a:"My last leak got approved, so you know I’m legit.",r:"They removed my last leak. They’re scared. That means it was TRUE.",w:"I’ve been warned. By whom? Exactly."},
+ BananaEnjoyer:{a:"mods let the last one through so I’m basically staff now",r:"my last meme got removed. i’m not mad. i’m just banana-disappointed"},
+ ActuallyPlayedIt:{a:"Following up on my last post, since people seemed to find it useful.",r:"I’ve re-read the rules. I think this one fits."},
+ The3AMCustomer:{a:"You allowed me in. Good.",r:"You cannot remove what was already in the building."},
+ NewHere_pls:{a:"omg you approved my question, thank you!!",r:"sorry if I did something wrong?? I’m new"},
+ OGMember_0004:{a:"I notice you’re still approving my posts. At least someone remembers who was here first.",r:"Removing my posts? I was here at 12 members."},
+ clockgoblin:{a:"Following up. It is 3:17. It is always 3:17.",r:"Reposting. The timestamp on this one is immaculate."}
+};
+var GEN={a:"(thanks for approving my last post)",r:"(reposting after my last one was removed. No idea why)",w:"(yes, I got the warning, I’ve read the rules)"};
+function memLine(u){var st=S.us[u];if(!st)return"";var m=MEM[u]||GEN;
+ if(st.w>0&&Math.random()<.6)return m.w||GEN.w;
+ if(st.r>0&&Math.random()<.7)return m.r||GEN.r;
+ if(st.a>=1&&Math.random()<.45)return m.a||GEN.a;return""}
+
+/* ===================== FILLERS (procedural, so the queue never runs dry) ===================== */
+function filler(){
+ var r=Math.random(),viral=S.era==="v";
+ if(viral&&r<.42){var sp=["Cheap Steam keys, DM me","Make £500/day working from a petrol station (not a scam)","Hot singles near your local Kessler","I turned £10 into £10,000 with bananas. Ask how."];
+  return{id:"f"+(uid++),u:pick(["SpamBot_"+rnd(100,9999),"FreeRobux_"+rnd(10,99),"PromoPete"+rnd(1,999)]),fl:"Promo",k:"spam",t:pick(sp),b:pick(["Link in profile.","Limited time offer, act now.","Not affiliated with anyone. Click anyway."])}}
+ if(viral&&r<.78){var q=[["Do I have to play at night?","I started at lunchtime. The customer didn’t come. I’m confused and slightly offended."],["Is the banana man a real person?","My friend says he is and he lives near me. Should I lock my door?"],["Why is everyone saying ‘3:17’?","I just got here. Is it a code? A password? A time? A dentist appointment?"],["Where can I buy the game?","Is it on console? Phone? Telegram? Please help I’m on a bus."]];
+  var x=pick(q);return{id:"f"+(uid++),u:pick(["NewHere_"+rnd(10,99),"ConfusedKid"+rnd(1,99),"Anon_"+rnd(100,999)]),fl:"Question",k:"newbie",t:x[0],b:x[1]}}
+ var m=[["petrol station cashier simulator 2026: ‘one banana. just one.’","this is my entire personality now"],["we are all just customers at 3:17","the real banana was the friends we made"],["nobody: absolutely nobody:\nthe customer: *buys one banana*","not me. I’m fine."]];
+ var y=pick(m);return{id:"f"+(uid++),u:pick(["MemeMachine"+rnd(1,99),"Mem3Lord","BananaEnjoyer"]),fl:"Meme",k:"meme",t:y[0],b:y[1]}
+}
+
+/* ===================== STATE ===================== */
+var S;
+function fresh(){return{day:1,era:"q",members:12,online:3,health:80,chaos:8,rep:35,mystery:0,queue:[],used:new Set(),found:{},us:{},log:[],flags:{},pend:[],viral:null,peak:12,
+ memDay:0,rate:.25,cnt:{spamBan:0,clues:0,newbieRm:0,clears:0,bannedReg:0,buried:0,larp:0,misApp:0,locks:0,resolved:0},ended:false,locked:false,rank:2,lastBanReg:"",sel:null,resurf:[],evDone:{},notes:[],unread:0,sort:"new",pop:0}}
+var RANKS=[[0,"Unpaid Janitor"],[15,"Probationary Mod"],[30,"Queue Wrangler"],[45,"Trusted Mod"],[65,"Head Banana"],[85,"Legendary Moderator"]];
+function rankIdx(r){var i=0;RANKS.forEach(function(x,n){if(r>=x[0])i=n});return i}
+function stageOf(m){return m>=90?"Case closed":m>=65?"Almost there":m>=40?"A shape emerges":m>=15?"Something’s off":"Cold case"}
+function us(n){return S.us[n]||(S.us[n]={a:0,r:0,w:0,b:false})}
+
+/* ===================== UI PRIMITIVES ===================== */
+function tweenNum(el,to){
+ var from=el._n==null?to:el._n;el._n=to;if(el._raf)cancelAnimationFrame(el._raf);
+ if(reduced||Math.abs(to-from)<2){el.textContent=fmt(to);return}
+ var t0=performance.now(),dur=550;
+ (function f(t){var k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);el.textContent=fmt(from+(to-from)*e);if(k<1)el._raf=requestAnimationFrame(f)})(t0);
+}
+function meter(id,v){$(id).style.transform="scaleX("+clamp(v,0,100)/100+")"}
+function setText(id,t){var e=$(id);if(e.textContent!==t)e.textContent=t}
+function cap(){return S.era==="q"?8:12}
+function setHUD(){
+ tweenNum($("v-mem"),S.members);tweenNum($("a-mem"),S.members);
+ S.online=clamp(Math.round(S.members*S.rate),S.members>0?2:0,999999);
+ setText("v-on",fmt(S.online));setText("a-on",fmt(S.online));
+ setText("v-delta",(S.memDay>=0?"+":"")+fmt(S.memDay)+" today");
+ setText("v-h",String(S.health));meter("b-h",S.health);
+ setText("v-c",String(S.chaos));meter("b-c",S.chaos);
+ setText("v-r",String(S.rep));meter("b-r",S.rep);setText("v-rank",RANKS[rankIdx(S.rep)][1]);
+ setText("v-m",S.mystery+"%");meter("b-m",S.mystery);setText("v-stage",stageOf(S.mystery));
+ var c=cap(),n=S.queue.length;setText("v-q",n+"/"+c);meter("b-q",n/c*100);$("mq").classList.toggle("over",n>c);
+ setText("qn",String(n));setText("a-day",String(S.day));setText("dayp","Day "+S.day+" / "+MAXDAY);
+ setText("bn",Object.keys(S.found).length+"/"+CLN);
+ var lab=S.day>=MAXDAY?"FINISH THE RUN ✓":"END DAY →";setText("endday",lab);setText("endday2",lab);
+ $("bellb").textContent=S.unread;$("bellb").classList.toggle("on",S.unread>0);
+ $("about").textContent=S.era==="q"?"A tiny community investigating an indie game where a petrol-station customer buys one banana every night at 3:17 AM. Everyone knows everyone.":S.viral&&S.viral.outcome==="fizzle"?"The video helped a little. The mystery is the same size as before. The queue is slightly larger.":"Trending. Please read the FAQ before asking if the banana man is real. He’s a game character. Probably.";
+}
+function toast(html,cls,ms){
+ var box=$("toasts"),t=document.createElement("div");t.className="toast "+(cls||"");t.innerHTML=html;box.appendChild(t);
+ while(box.children.length>4)box.firstChild.remove();
+ requestAnimationFrame(function(){t.classList.add("in")});
+ setTimeout(function(){t.classList.remove("in");setTimeout(function(){t.remove()},320)},ms||4200);
+}
+function logLine(t){S.log.push("Day "+S.day+": "+t);if(S.log.length>40)S.log.shift();var b=$("log");b.innerHTML=S.log.slice(-9).reverse().map(function(l){return"<div>"+esc(l)+"</div>"}).join("")}
+function note(t){S.notes.push(t);if(S.notes.length>20)S.notes.shift();S.unread++}
+function deltaHTML(d){var o="";[["h","Health",1],["c","Chaos",-1],["r","Rep",1],["my","Mystery",1],["m","Members",1]].forEach(function(x){var v=d[x[0]];if(v){var good=(v>0)===(x[2]>0);o+='<i class="'+(good?"up":"dn")+'">'+x[1]+" "+(v>0?"+":"")+fmt(v)+"</i>"}});return o}
+function adj(f){
+ var b={h:S.health,c:S.chaos,r:S.rep,my:S.mystery,m:S.members};
+ S.health=clamp(S.health+(f.h||0),0,100);S.chaos=clamp(S.chaos+(f.c||0),0,100);S.rep=clamp(S.rep+(f.r||0),0,100);S.mystery=clamp(S.mystery+(f.my||0),0,100);
+ var dm=(f.m||0)+(f.mp?Math.round(S.members*f.mp/100):0);S.members=Math.max(0,S.members+dm);S.peak=Math.max(S.peak,S.members);S.memDay+=S.members-b.m;
+ var ri=rankIdx(S.rep);if(ri>S.rank){toast("⭐ Rank up: <b>"+RANKS[ri][1]+"</b>","good")}S.rank=ri;
+ if(S.chaos>=85&&b.c<85)toast("🚨 Chaos is critical. One more bad day and the queue wins.","bad",5500);
+ return{h:S.health-b.h,c:S.chaos-b.c,r:S.rep-b.r,my:S.mystery-b.my,m:S.members-b.m};
+}
+
+/* ===================== MODALS ===================== */
+function openModal(o,cb){
+ S.locked=true;$("mtag").textContent=o.tag||"";$("mtitle").textContent=o.title;$("mtext").innerHTML=o.html||"";
+ var box=$("mchoices");box.innerHTML="";
+ (o.choices||[{label:o.btn||"Continue",fn:null}]).forEach(function(ch){var b=document.createElement("button");b.className="choice";b.innerHTML="<b>"+esc(ch.label)+"</b>"+(ch.desc?"<span>"+esc(ch.desc)+"</span>":"");
+  b.onclick=function(){closeModal();if(ch.fn)ch.fn();if(cb)cb()};box.appendChild(b)});
+ $("modal").classList.remove("hide");box.firstChild.focus();
+}
+function closeModal(){$("modal").classList.add("hide");S.locked=false}
+function runChain(list,done){var i=0;(function step(){if(i>=list.length)return done();list[i++](step)})()}
+
+/* ===================== QUEUE ===================== */
+var W_Q={clue:3,theory:3,wild:1.5,meme:1.5,newbie:.5,off:.5,spam:.6,misinfo:.5,larp:.4,drama:.3,hot:.3,dev:1,dox:0};
+var W_V={clue:1.5,theory:1.8,wild:2,meme:2,newbie:3,off:1,spam:2,misinfo:3,larp:2.5,drama:2,hot:2,dev:.8,dox:.9};
+function candOK(p){
+ if(S.used.has(p.id))return false;if(S.day<p.d[0]||S.day>p.d[1])return false;
+ if(p.e!=="*"&&p.e!==S.era)return false;
+ if(p.clue&&S.found[p.clue])return false;
+ if(p.req&&!p.req.every(function(c){return S.found[c]}))return false;
+ if(p.if&&!p.if(S))return false;
+ var st=S.us[p.u];if(st&&st.b&&!(p.k==="clue"||p.k==="dev"))return false;
+ return true;
+}
+function qsize(){
+ var n;
+ if(S.era==="q")n=rnd(3,4)+(S.day>=4?1:0);
+ else{var o=S.viral.outcome;n=o==="boom"?rnd(8,11):o==="steady"?rnd(6,8):rnd(4,6)}
+ if(S.flags.helper)n--;if(S.flags.restrict)n-=2;if(S.flags.crowd)n+=2;
+ return Math.max(3,n);
+}
+function inst(def,extra){
+ var p=Object.assign({},def,extra||{});p.id=def.id+"_"+(uid++);p.def=def.id;
+ var v=S.era==="q"?rnd(1,38):rnd(20,Math.max(60,Math.round(S.members*.1)));
+ p.votes=def.k==="spam"?rnd(0,3):v;p.cm=Math.round(p.votes*(.1+Math.random()*.35));p.age=rnd(2,320);
+ p.rep=BAD[def.k]?rnd(1,6):(Math.random()<.2?rnd(1,2):0);
+ var rep=S.flags.ban||"";p.t=p.t.replace(/\{ban\}/g,S.lastBanReg||"them").replace(/\{vid\}/g,S.viral?(S.viral.type==="bait"?"I may have oversold the curse part.":"Credit to everyone who actually found the clues."):"");
+ p.b=p.b.replace(/\{ban\}/g,S.lastBanReg||"them");
+ if(!p.cmt&&Math.random()<.6)p.cmt=pick(CMT[p.k]||CMT.off);
+ p.mem=memLine(p.u);
+ return p;
+}
+function buildQueue(){
+ var n=qsize(),out=[],usr={};
+ // reposts of removed clues (reduced value)
+ S.resurf.splice(0).forEach(function(r){if(out.length<2){out.push(r)}});
+ // forced story beats
+ POOL.forEach(function(p){if(p.fd===S.day&&candOK(p)&&out.length<n){S.used.add(p.id);out.push(inst(p))}});
+ // personal drama for repeatedly removed users
+ Object.keys(S.us).forEach(function(name){var st=S.us[name];if(st.r>=2&&!st.b&&!st.dramaDone&&Math.random()<.5&&out.length<n+1){st.dramaDone=1;
+  out.push(inst({id:"dr_"+name,u:name,fl:"Meta",k:"drama",t:"I’ve had "+st.r+" posts removed and I’d like to know what I did wrong",b:"I follow the rules. I read the sidebar. Every time I post, it vanishes. If this is about the banana situation I want to be told directly.",d:[1,14],e:"*"}))}});
+ // weighted picks
+ var tries=0,W=S.era==="q"?W_Q:W_V,pool=POOL.filter(candOK);
+ while(out.length<n&&tries++<80){
+  var cands=pool.filter(function(p){return !S.used.has(p.id)&&(usr[p.u]||0)<2});
+  if(!cands.length){var f=filler();out.push(inst(f));continue}
+  var tot=0;cands.forEach(function(p){p._w=(W[p.k]||1)*(p.w||1)*(p.k==="clue"&&S.mystery<40?1.3:1);tot+=p._w});
+  var r=Math.random()*tot,ch=cands[0];for(var i=0;i<cands.length;i++){r-=cands[i]._w;if(r<=0){ch=cands[i];break}}
+  var ex={};if(S.us[ch.u]&&S.us[ch.u].b&&(ch.k==="clue"||ch.k==="dev")){ex.u=S.us.ActuallyPlayedIt&&S.us.ActuallyPlayedIt.b?"ArchiveAnna":"ActuallyPlayedIt";ex.mem="Sharing this on behalf of u/"+ch.u+", who isn’t allowed to post here anymore."}
+  S.used.add(ch.id);usr[ex.u||ch.u]=(usr[ex.u||ch.u]||0)+1;out.push(inst(ch,ex));
+ }
+ // helpers and filters
+ var auto=[];
+ function autoRm(kinds,name){var i=out.findIndex(function(p){return kinds.indexOf(p.k)>=0&&!p.clue});if(i>=0){var p=out.splice(i,1)[0];auto.push(name+" auto-removed “"+p.t.slice(0,32)+"…”")}}
+ if(S.flags.comod)autoRm(["spam","off"],"u/PixelDetective");
+ if(S.flags.helper)autoRm(["misinfo","spam"],"u/ActuallyPlayedIt");
+ if(S.flags.filter){while(true){var j=out.findIndex(function(p){return p.k==="spam"});if(j<0)break;out.splice(j,1);auto.push("Spam filter caught a bot")}
+  if(Math.random()<.18){var k=out.findIndex(function(p){return p.clue});if(k>=0){var lost=out.splice(k,1)[0];S.cnt.buried++;toast("🧹 Your spam filter swallowed a genuine clue by u/"+esc(lost.u),"bad",5000);logLine("Spam filter swallowed a clue.")}}}
+ if(auto.length)logLine(auto.slice(0,2).join("; ")+".");
+ S.queue=shuffle(out);
+}
+function cardEl(p,i){
+ var u=U(p.u),el=document.createElement("article");el.className="post enter";el.id="p-"+p.id;el.style.setProperty("--i",Math.min(i,8));
+ var age=p.age<60?p.age+" min ago":Math.floor(p.age/60)+" h ago",h=0;for(var c=0;c<p.fl.length;c++)h+=p.fl.charCodeAt(c);
+ var roleCls=u.dev?"role devb":u.reg?"role reg":"role";
+ var mk=p.scr?'<figure class="shot"><div class="shotimg"><span class="clk">03:17</span><i class="mark" style="left:'+rnd(24,76)+"%;top:"+rnd(38,64)+'%"></i></div><figcaption>📷 '+esc(p.scr)+"</figcaption></figure>":"";
+ el.innerHTML='<div class="vote" aria-hidden="true"><button class="vb up" tabindex="-1">▲</button><b>'+fmtK(p.votes)+'</b><button class="vb dn" tabindex="-1">▼</button></div>'+
+ '<div class="pbody"><div class="pmeta"><span class="av" style="background:'+u.col+'">'+esc(p.u.charAt(0).toUpperCase())+'</span><b class="un">u/'+esc(p.u)+'</b><span class="'+roleCls+'">'+esc(u.role)+'</span><span>•</span><span>'+age+'</span><span class="flair f'+(h%6)+'">'+esc(p.fl)+'</span>'+(p.rep?'<span class="rptag">⚑ '+p.rep+" reports</span>":"")+"</div>"+
+ "<h3>"+esc(p.t)+"</h3>"+(p.mem?'<div class="memline">↪ '+esc(p.mem)+"</div>":"")+"<p>"+esc(p.b)+"</p>"+mk+
+ '<div class="pfoot"><span>💬 '+fmtK(p.cm)+" comments</span><span>⤴ Share</span><div class=\"tools\">"+
+ '<button class="mt ap" data-a="a" title="Approve (A)">✔ Approve</button><button class="mt rm" data-a="r" title="Remove (R)">✖ Remove</button><button class="mt lk" data-a="l" title="Lock comments (L)">🔒 Lock</button><button class="mt wn" data-a="w" title="Remove and warn (W)">⚠ Warn</button><button class="mt bn" data-a="b" title="Remove and ban (B)">⛔ Ban</button></div></div>'+
+ (p.cmt?'<div class="topcmt">'+esc(p.cmt)+"</div>":"")+"</div>";
+ return el;
+}
+function renderQueue(){
+ var feed=$("feed");feed.textContent="";var fr=document.createDocumentFragment();
+ S.queue.sort(function(a,b){return a.age-b.age});
+ S.queue.forEach(function(p,i){fr.appendChild(cardEl(p,i))});feed.appendChild(fr);S.sel=null;sortFeed();updateEmpty();
+}
+function sortFeed(){
+ var f=S.sort,list=S.queue.slice();
+ if(f==="top")list.sort(function(a,b){return b.votes-a.votes});else if(f==="rep")list.sort(function(a,b){return b.rep-a.rep});else list.sort(function(a,b){return a.age-b.age});
+ var feed=$("feed");list.forEach(function(p){var e=$("p-"+p.id);if(e)feed.appendChild(e)});
+ document.querySelectorAll(".sortbox button").forEach(function(b){b.classList.toggle("on",b.dataset.sort===f)});
+}
+function updateEmpty(){
+ var e=$("empty"),none=S.queue.length===0;e.classList.toggle("hide",!none);
+ if(none){$("emptyt").textContent=pick(["Queue cleared ✨","Inbox zero. Suspicious.","Nothing left to moderate"]);$("emptyd").textContent=pick(["Beautiful moderation. End the day when ready.","The petrol station is quiet. For now.","Somewhere, a till beeps three, one, seven."])}
+}
+
+/* ===================== ACTIONS ===================== */
+function act(id,a){
+ var p=S.queue.find(function(x){return x.id===id});if(!p||S.ended||S.locked)return;
+ var e=(p.fx&&p.fx[a])||EFF[p.k][a],h=e[0],c=e[1],r=e[2],my=e[3],mem=e[4];
+ var user=U(p.u),st=us(p.u),extra="";
+ // clues feed the mystery
+ if(p.clue&&!S.found[p.clue]&&(a==="a"||a==="l")){var g=CL[p.clue][2]*(p.repost?.7:1);my=Math.round(a==="a"?g:g*.5)}
+ // era makes chaos worse
+ if(S.era==="v"&&c>0)c=Math.round(c*1.4);
+ // LARP confuses newcomers
+ if(p.k==="larp"&&a==="a"&&S.era==="v"){c+=2;r-=1;extra=" Newcomers are visibly confused."}
+ // banning a respected regular
+ if(a==="b"&&user.reg&&!BAD[p.k]&&!user.dev){h-=6;c+=5;r-=4;mem-=3;extra=" The regulars are NOT happy."}
+ // repeat offenders
+ if((a==="b"||a==="w")&&(p.k==="misinfo"||p.k==="spam"||p.k==="hot"||p.k==="larp")&&st.w>=1){r+=2;extra=" They were warned before."}
+ var sc=S.era==="q"?1:1+S.members/80,dm=Math.round(mem*sc);dm=Math.max(dm,-Math.round(S.members*.15));
+ var d=adj({h:h,c:c,r:r,my:my,m:dm});
+ // user memory
+ if(a==="a"||a==="l")st.a++;if(a==="r"||a==="w"||a==="b")st.r++;if(a==="w")st.w++;
+ if(a==="b"){st.b=true;if(user.reg&&!BAD[p.k]){S.cnt.bannedReg++;S.lastBanReg=p.u}if(p.k==="spam")S.cnt.spamBan++}
+ if(a==="a"&&p.k==="misinfo")S.cnt.misApp++;if(a==="a"&&p.k==="larp")S.cnt.larp++;if(a==="l")S.cnt.locks++;
+ if(p.k==="newbie"&&(a==="r"||a==="w"||a==="b"))S.cnt.newbieRm++;
+ var msg=pick(M[p.k][a]).replace(/\{u\}/g,"u/"+p.u)+extra;
+ var cls=(h+r+my>0)?"good":(h+r<0)?"bad":"";
+ // clue filing
+ if(p.clue&&!S.found[p.clue]&&(a==="a"||a==="l")){
+  S.found[p.clue]=true;S.cnt.clues++;var cl=CL[p.clue];
+  toast("🔍 <b>CLUE FILED: "+esc(cl[0])+"</b><span class=\"d\">"+esc(cl[1])+"</span>","clue",6000);logLine("CLUE FILED: "+cl[0]+".");note("Clue filed: "+cl[0]);
+  if(p.clue==="truth"&&S.used.has("leak1"))setTimeout(function(){toast("📰 u/LeakLord_Dave is claiming he called MR_ALDER first. He guessed. But, technically…","","6000")},900);
+ }else if(p.clue&&!S.found[p.clue]&&(a==="r"||a==="w"||a==="b")){
+  S.cnt.buried++;
+  if(!p.repost&&Math.random()<.75){var np=inst(POOLBYID[p.def]||p,{repost:true,mem:a==="b"?"Reposting on behalf of u/"+p.u+", who can’t post here anymore.":"Reposting this, because I think it matters."});
+   if(a==="b"){np.u=S.us.ActuallyPlayedIt&&S.us.ActuallyPlayedIt.b?"ArchiveAnna":"ActuallyPlayedIt"}np.t="[Repost] "+np.t.replace(/^\[Repost\] /,"");S.resurf.push(np)}
+ }
+ // theories that are later confirmed or disproven
+ if(p.res&&(a==="a"||a==="l"))S.pend.push({due:S.day+p.res.after,res:p.res});
+ if(p.k==="theory"&&(a==="a"||a==="l")&&!p.res&&p.mystery)adj({my:1});
+ logLine(VERB[a]+" “"+p.t.slice(0,44)+(p.t.length>44?"…":"")+"” by u/"+p.u+".");
+ toast(esc(msg)+'<span class="d">'+deltaHTML(d)+"</span>",cls);
+ // animate out
+ var el=$("p-"+p.id);if(el){el.dataset.out=a;el.dataset.stamp=STAMP[a];setTimeout(function(){el.remove()},reduced?0:340)}
+ S.queue=S.queue.filter(function(x){return x.id!==id});if(S.sel===id)S.sel=null;
+ updateEmpty();setHUD();
+ if(S.health<=0)return finish("civil");if(S.rep<=0)return finish("admins");
+}
+
+/* ===================== VIRAL EVENT ===================== */
+var VIDEO={
+ solid:{title:"NOBODY NOTICED THE CLOCK IN THIS GAME (I think I solved it?)",chan:"GlitchGoblin",lines:{boom:"The video explains your sub’s real-time-clock find with a few fair credits. The pinned comment is a link to r/LastCustomer.",steady:"A good video, a decent link in the description, a fair audience.",fizzle:"Solid video, but the algorithm sits on it. A trickle arrives."}},
+ bait:{title:"THE LAST CUSTOMER IS CURSED (DO NOT PLAY AT 3:17AM)",chan:"GlitchGoblin",lines:{boom:"The video is mostly vibes and a lot of red text. The pinned comment: ‘join the community → r/LastCustomer’. People are arriving who have never launched the game.",steady:"Clickbait with a link in the description. The audience trickles in, confused.",fizzle:"The video barely lands. The pinned comment links to r/LastCostumer (typo). A trickle finds you anyway."}}
+};
+function viralRoll(){var d=S.day;if(S.viral||d<5)return false;return Math.random()<(d>=8?1:(d-4)*.24)}
+function doViral(cb){
+ var q=(S.mystery+S.health)/200,pB=.22+.35*q,pS=.43,r=Math.random();
+ var outcome=r<pB?"boom":r<pB+pS?"steady":"fizzle",type=S.mystery>=35?"solid":"bait",V=VIDEO[type];
+ var views={boom:fmt(rnd(1200,3200)*1000/1000)+"K views in 14 hours",steady:fmt(rnd(140,480))+"K views",fizzle:fmt(rnd(18,60))+"K views"}[outcome];
+ var gain=outcome==="boom"?rnd(6500,15000):outcome==="steady"?rnd(1100,3200):rnd(160,480);
+ var html='<p>You wake up. Your phone is hot. Notifications look like a slot machine.</p><div class="yt"><div class="ytthumb"><b>'+esc(V.title)+'</b><span class="ytclk">3:17</span><span class="dur">23:17</span></div><div class="ytmeta"><b style="color:#fff">'+V.chan+"</b> · "+views+" · 2 hours ago</div></div><p>"+esc(V.lines[outcome])+'</p><p style="color:#fff"><b>+'+fmt(gain)+" members</b> overnight.</p>";
+ openModal({tag:"🚨 BREAKING",title:outcome==="boom"?"YOUR SUBREDDIT WENT VIRAL":outcome==="steady"?"A VIDEO MENTIONED YOU":"A VIDEO ALMOST MENTIONED YOU",html:html,btn:"Open the mod queue"},function(){
+  S.viral={day:S.day,outcome:outcome,type:type};S.era="v";document.body.classList.remove("era-q");document.body.classList.add("era-v");
+  var d=adj({m:gain,c:outcome==="boom"?25:outcome==="steady"?12:5});
+  if(outcome!=="fizzle")$("trend").classList.remove("hide");
+  if(!reduced){document.body.classList.add("surge");setTimeout(function(){document.body.classList.remove("surge")},900)}
+  logLine("YOUR SUBREDDIT GOT NOTICED. +"+fmt(gain)+" members ("+outcome+").");note("A video brought "+fmt(gain)+" members.");
+  toast("📈 <b>+"+fmt(gain)+" members</b> joined overnight"+'<span class="d">'+deltaHTML({c:d.c})+"</span>","big",5000);cb()});
+}
+
+/* ===================== EVENTS ===================== */
+var EVLIST=[
+ {id:"comod",fixed:1,when:function(s){return s.day===3},title:"u/PixelDetective wants to co-moderate",tag:"MOD MAIL",
+  html:"<p>He has opinions about flair. He also has 14 pages of notes and has not touched grass since Tuesday.</p>",
+  choices:[{label:"Accept him as a co-mod",desc:"He’ll remove a spam post per day. He’ll also be pedantic.",fn:function(){S.flags.comod=1;adj({r:3,h:2});logLine("u/PixelDetective joined the mod team.")}},
+   {label:"Make him write an application",desc:"It’s 11 pages. It includes a footnote about 3:17.",fn:function(){adj({my:3,r:1,h:-1});logLine("PixelDetective submitted an application.")}},
+   {label:"Politely decline",desc:"You’d rather be the only person who can ban people.",fn:function(){adj({h:-1,c:-1})}}]},
+ {id:"patch",when:function(s){return s.day>=4&&s.day<=10},title:"The dev pushes a patch",tag:"PATCH NOTES",
+  html:"<p>The customer now arrives at 3:18. The whole sub is losing its mind, and the 3:18 posts are already stacking up.</p>",
+  choices:[{label:"Sticky a megathread",desc:"Contain the panic in one place.",fn:function(){adj({c:-8,h:3,r:2})}},
+   {label:"Let it burn",desc:"Chaos is content.",fn:function(){adj({c:8,mp:6})}},
+   {label:"Ban the word ‘patch’",desc:"Mods are the problem now.",fn:function(){adj({c:5,r:-4,h:-3})}}]},
+ {id:"crowd",fixed:1,when:function(s){return !!s.viral&&s.day===s.viral.day+1},title:"The queue is on fire",tag:"CROWD CONTROL",
+  html:"<p>Overnight, the mod queue grew a second head. You can try to slow the flood.</p>",
+  choices:[{label:"Restrict new accounts",desc:"Fewer posts, less growth, calmer sub.",fn:function(){S.flags.restrict=1;adj({c:-6,h:2});logLine("New-account restrictions enabled.")}},
+   {label:"Enable an auto-spam filter",desc:"Bots are caught. Real clues sometimes are too.",fn:function(){S.flags.filter=1;adj({c:-3})}},
+   {label:"Embrace it",desc:"More members, more chaos, more queue.",fn:function(){S.flags.crowd=1;adj({mp:10,c:6})}}]},
+ {id:"streamer",when:function(s){return !!s.viral&&s.viral.outcome!=="fizzle"&&s.day>=s.viral.day+1&&s.day<=12},title:"A streamer wants to read the sub live",tag:"MOD MAIL",
+  html:"<p>They have 90,000 followers and a ring light. They want you to ‘make it fun’. They also want you to say the words ‘banana man’ on camera.</p>",
+  choices:[{label:"Do the stream",desc:"Members surge. So does the weirdness.",fn:function(){adj({mp:15,c:8,r:-1})}},
+   {label:"Decline politely",desc:"Keep the sub yours.",fn:function(){adj({r:3,c:-2})}}]},
+ {id:"mods",fixed:1,when:function(s){return !!s.viral&&s.day>=s.viral.day+2&&s.day<=12},title:"Mod applications",tag:"RECRUITING",
+  html:"<p>212 applications. Three are interesting.</p>",
+  choices:[{label:"u/ActuallyPlayedIt",desc:"Calm, reasonable, slightly boring. Good.",fn:function(){S.flags.helper=1;adj({h:5,r:4});logLine("u/ActuallyPlayedIt joined the mod team.")}},
+   {label:"u/OGMember_0004",desc:"Loyal. Bitter. Will remove newcomers.",fn:function(){adj({r:2,h:-3,c:-4});logLine("u/OGMember_0004 joined the mod team.")}},
+   {label:"u/Cashier_No_2",desc:"Stays in character at all times. Memeable.",fn:function(){adj({c:6,mp:5,r:-2});logLine("u/Cashier_No_2 joined the mod team.")}},
+   {label:"Mod alone",desc:"Sure, trust is for suckers.",fn:function(){adj({h:-2,c:3})}}]},
+ {id:"brigade",when:function(s){return !!s.viral&&s.chaos>=45&&s.day<=13},title:"Brigade incoming",tag:"ALERT",
+  html:"<p>A rival sub is raiding you with ‘CURSED GAME’ memes. The comments are an inferno.</p>",
+  choices:[{label:"Lock the sub for a day",desc:"Chaos drops. Growth stalls.",fn:function(){adj({c:-15,h:-3,mp:-2})}},
+   {label:"Fight back with memes",desc:"It’s war. It’s also content.",fn:function(){adj({c:5,mp:6,h:2})}},
+   {label:"Report to the admins",desc:"Maybe they listen. Maybe they don’t.",fn:function(){if(Math.random()<.5)adj({c:-8,r:2});else adj({r:-1})}}]},
+ {id:"dm",fixed:1,when:function(s){return !!s.found.sign&&s.day>=8&&s.day<=12},title:"DM from u/wren_dev_",tag:"MOD MAIL",
+  html:"<blockquote>People are finding the station. Please ask them to stop.</blockquote><p>The ‘dev’ is being gentle. It still sounds like a plea.</p>",
+  choices:[{label:"Pin a request to respect the real place",desc:"Kind. May slow down the investigation.",fn:function(){S.flags.respect=1;adj({r:3,c:-4,h:2,my:-2})}},
+   {label:"Tell the community and let them decide",desc:"Transparency. Messy.",fn:function(){adj({c:4,mp:3,my:4})}},
+   {label:"Keep it to yourself",desc:"A secret between mods. Secrets can leak.",fn:function(){adj({r:-2})}}]}
+];
+var FINALE={id:"finale",title:"CLOSING TIME",tag:"DEVELOPER · 3:17 AM"};
+function pickEvent(){
+ if(S.day===MAXDAY)return FINALE;
+ for(var i=0;i<EVLIST.length;i++){var e=EVLIST[i];if(e.fixed&&!S.evDone[e.id]&&e.when(S)){S.evDone[e.id]=1;return e}}
+ if(S.day>=3&&Math.random()<.35){var c=EVLIST.filter(function(e){return !e.fixed&&!S.evDone[e.id]&&e.when(S)});if(c.length){var ev=pick(c);S.evDone[ev.id]=1;return ev}}
+ return null;
+}
+function runEvent(ev,cb){
+ if(ev===FINALE){
+  var truth=!!S.found.truth,banned=S.us.wren_dev_&&S.us.wren_dev_.b;
+  var html=(banned?"<p>You banned him from posting here. He posted elsewhere, and someone screenshotted it:</p>":"<p>A new post from <b>u/wren_dev_</b>, as the last day begins:</p>")+
+   (truth?"<blockquote>He stopped coming in March 2019. I never stopped opening it. Tonight I’m closing the station for good. Thank you for keeping it open this long.</blockquote><p>You know exactly what it means. So does the sub.</p>":"<blockquote>Closing time. Thank you for keeping the lights on. I’m sorry I couldn’t say more.</blockquote><p>You don’t know what it means. Neither do 40 people in the replies.</p>");
+  openModal({tag:ev.tag,title:ev.title,html:html,choices:[
+   {label:"Pin it and lock the thread",desc:"A quiet goodbye. Respectful, controlled.",fn:function(){S.flags.fin="goodbye";adj({h:6,r:6,c:-10});logLine("Pinned the dev’s goodbye and locked it.")}},
+   {label:"Pin it open and let everyone in",desc:"Loud, messy, emotional.",fn:function(){S.flags.fin="wake";adj({h:4,c:8,mp:6});logLine("Pinned the dev’s goodbye. Comments open.")}},
+   {label:"Keep it to yourself",desc:"It isn’t yours to share.",fn:function(){S.flags.fin="sit";adj({r:-4,c:-4});logLine("Kept the dev’s message private.")}}]},cb);return;
+ }
+ openModal({tag:ev.tag,title:ev.title,html:ev.html,choices:ev.choices},cb);
+}
+function processResolves(){
+ var due=S.pend.filter(function(x){return x.due<=S.day});S.pend=S.pend.filter(function(x){return x.due>S.day});
+ due.forEach(function(x,i){setTimeout(function(){
+  if(x.res.yes){adj({r:3,my:4,h:1});toast("✅ <b>CONFIRMED</b><span class=\"d\">"+esc(x.res.text)+"</span>","good",7000);logLine("Theory confirmed.")}
+  else{adj({r:-2,c:1});toast("❌ <b>DISPROVEN</b><span class=\"d\">"+esc(x.res.text)+"</span>","bad",7000);logLine("Theory disproven.")}
+  S.cnt.resolved++;note(x.res.yes?"A theory was confirmed.":"A theory was disproven.");setHUD()},400+i*900)});
+}
+var NQ=["🔔 u/BananaEnjoyer gave your sub a Silver. It’s a banana emoji.","📌 Someone wrote ‘3:17’ on their hand and can’t wash it off.","🌙 It’s 3:16 AM somewhere. Everyone is suspiciously quiet.","📬 A stranger asked if the sub is ‘like Reddit but for the petrol station guy’.","🔔 u/clockgoblin posted ‘it’s 3:17’ at 3:17. Again."];
+var NV=["📈 r/LastCustomer is ‘rising’. The algorithm has noticed you.","🔔 A streamer said ‘banana man’ on camera. +400 members.","😬 Someone made a meme about r/LastCustomer in r/LastCustomer.","📬 Mod mail: 212 unread. 211 are the same question.","🔥 Someone typed ‘I haven’t played it but’ and then 600 words.","🪙 You received Gold from u/DefinitelyNotTheCustomer."];
+function notif(){if(Math.random()<.65){var t=pick(S.era==="q"?NQ:NV);note(t);setTimeout(function(){toast(t)},700)}}
+
+/* ===================== DAY FLOW ===================== */
+function beginDay(){
+ S.rate=.04+Math.random()*.05;
+ var chain=[];
+ if(viralRoll())chain.push(function(cb){doViral(cb)});
+ chain.push(function(cb){processResolves();notif();cb()});
+ var ev=pickEvent();if(ev)chain.push(function(cb){runEvent(ev,cb)});
+ runChain(chain,function(){buildQueue();renderQueue();setHUD();
+  if(S.health<=0)finish("civil");else if(S.rep<=0)finish("admins")});
+}
+function growth(){
+ var base,m;
+ if(!S.viral)base=rnd(0,3)+(S.mystery>30?1:0);
+ else{var o=S.viral.outcome,age=S.day-S.viral.day;base=o==="boom"?rnd(300,1400)*Math.pow(.88,age):o==="steady"?rnd(60,260):rnd(0,30)}
+ m=(.35+S.health/110)*(1-S.chaos/220)*(S.flags.restrict?.6:1);
+ var g=Math.max(0,Math.round(base*m));
+ if(S.viral&&S.health<35)g=-Math.round(S.members*rnd(1,5)/100);
+ return g;
+}
+function endDay(){
+ if(S.ended||S.locked)return;
+ var left=S.queue.length,d={h:0,c:0,r:0};
+ if(left){var buried=S.queue.filter(function(p){return p.clue}).length,c=left*(S.era==="q"?1.5:1.2);
+  adj({c:Math.round(c),r:-Math.floor(left/2),h:-buried});
+  if(buried){S.cnt.buried+=buried;toast("📦 "+buried+" clue"+(buried>1?"s":"")+" got buried in the queue.","bad")}
+  toast(left+" unreviewed post"+(left>1?"s":"")+" expired. The sub noticed.","bad");
+  if(left>cap())adj({c:5,h:-3,r:-3})}
+ else{S.cnt.clears++;adj({h:1,r:1});toast("✨ Inbox zero. The community noticed.","good")}
+ var g=growth();S.memDay=0;adj({m:g});S.memDay=g;
+ if(!left)adj({c:-2});else adj({c:-1});
+ setHUD();
+ if(S.health<=0)return finish("civil");if(S.rep<=0)return finish("admins");if(S.chaos>=100)return finish("meltdown");if(S.members<=2&&S.day>2)return finish("ghost");
+ if(S.day>=MAXDAY)return finish();
+ S.day++;beginDay();
+}
+
+/* ===================== ENDINGS ===================== */
+var END={
+ civil:["SUBREDDIT CIVIL WAR","Your community is in shambles. The regulars decamped to r/LastCustomer2 and are calling it ‘the real one’. The banana customer, for once, is not the weirdest thing happening at 3:17 AM."],
+ admins:["THE ADMINS HAVE ENTERED THE CHAT","Your reputation hit rock bottom. A faceless committee called ‘Trust & Banana’ removed you and installed a bot. The bot is doing great."],
+ meltdown:["THE QUEUE ATE YOU","Chaos reached critical mass and the queue became sentient. It has 11,000 items, a LinkedIn, and a strong opinion about you."],
+ ghost:["GHOST TOWN","Everyone left. The sub is now you, a banana emoji, and a till beeping three-one-seven in your head."],
+ last:["THE LAST CUSTOMER","The dev’s goodbye went up and the thread stayed quiet. At 3:17 AM thousands of people opened the game, bought exactly one banana, and said nothing. The sub didn’t solve a mystery. It said goodbye to a regular who stopped coming in 2019, and you were the mod who let it happen."],
+ wake:["A LOUD, TENDER WAKE","You opened the thread and the whole community poured in. It was messy: jokes, tears, a woman asking if the banana was gluten-free. It was also exactly right. A man who bought one banana for eleven years got a goodbye bigger than he ever knew."],
+ sit:["THE SILENT KEEPER","You kept the dev’s message to yourself. The sub never got to say goodbye, but you know the truth and the till still beeps three-one-seven. Some mysteries are solved. Some are kept."],
+ almost:["SO CLOSE TO THE STATION","You found the sign, the voicemail, the strange little clues. The community knows it’s about a real place and a real person, but never learned the name. The dev’s last post is a thank-you nobody quite understands."],
+ empire:["THE VIRAL LORE EMPIRE","Thousands of members, a working FAQ, and a mod team that sleeps in shifts. r/LastCustomer is a minor institution. People who’ve never played the game cite you as an authority. You are, at least, not wrong."],
+ republic:["BANANA REPUBLIC","The sub is huge, loud, and barely governed. There’s a flag. There’s a currency. There’s a man who claims to be the customer’s lawyer. It’s not a community. It’s a nation."],
+ hangover:["THE VIRAL HANGOVER","The internet came, saw, and left a mess. The sub shrank, the regulars are tired, and the video has 14 million views of someone else’s fame. You’re still here, holding the mop."],
+ steady:["A GROWN-UP COMMUNITY","A few thousand members, steady and fairly sane. You’ve built the kind of sub where people actually answer questions. The mystery is half-solved and the memes are still good."],
+ small:["A SMALL, STUBBORN COMMUNITY","The internet noticed you, shrugged, and left. The regulars stayed. You’re a tiny sub investigating a very dumb, very creepy game, and that’s exactly what you wanted."],
+ quiet:["THE QUIET AFTER","The viral moment didn’t happen, or it did and nobody noticed. The sub is small, the mystery is unresolved, and a banana is somewhere being purchased at 3:17 AM without you."],
+ dull:["ANOTHER NIGHT SHIFT","You made it through. Nothing exploded. The mystery is mostly unsolved and the till keeps beeping. Tomorrow is another 3:17."]
+};
+function pickEnding(){
+ var v=S.viral,fin=S.flags.fin;
+ if(S.found.truth&&fin==="goodbye"&&S.health>=45)return"last";
+ if(S.found.truth&&fin==="wake")return"wake";
+ if(S.found.truth&&fin==="sit")return"sit";
+ if(S.found.truth&&fin==="goodbye")return"last";
+ if(S.mystery>=55)return"almost";
+ if(v&&v.outcome==="boom"){if(S.health>=55&&S.rep>=55)return"empire";if(S.chaos>=55)return"republic";if(S.health<45||S.members<S.peak*.5)return"hangover";return"empire"}
+ if(v&&v.outcome==="steady")return"steady";
+ if(v&&v.outcome==="fizzle")return S.health>=55?"small":"quiet";
+ return"dull";
+}
+function badges(){
+ var b=[],c=S.cnt;
+ if(c.spamBan>=3)b.push("🪓 Spam Slayer");if(c.clues>=6)b.push("🕵 Clue Hound");if(c.clues>=CLN)b.push("🧠 Full Case Board");
+ if(c.clears>=6)b.push("✨ Inbox Zen");if(c.newbieRm>=4)b.push("🚪 Gatekeeper");if(c.larp>=3)b.push("🎭 LARP Enabler");
+ if(c.bannedReg>=1)b.push("💔 Banned a Beloved Regular");if(c.misApp>=3)b.push("📢 Misinformation Megaphone");if(c.buried>=4)b.push("📦 Clue Burier");
+ if(c.resolved>=3)b.push("🔮 Theory Judge");if(S.viral&&S.viral.outcome==="boom")b.push("🔥 Survived the Viral Surge");
+ if(rankIdx(S.rep)>=5)b.push("👑 Legendary Moderator");return b;
+}
+function finish(forced){
+ if(S.ended)return;S.ended=true;S.locked=false;
+ var id=forced||pickEnding(),e=END[id];
+ var score=Math.round(S.members/50+S.health*3+S.rep*3+S.mystery*5-S.chaos*2)+(forced?0:100);
+ var best=0,found={};try{var raw=JSON.parse(localStorage.getItem("rr_v2")||"{}");best=raw.best||0;found=raw.endings||{};found[id]=1;if(score>best)best=score;localStorage.setItem("rr_v2",JSON.stringify({best:best,endings:found}))}catch(x){}
+ $("endtag").textContent=forced?"RUN OVER":"RUN COMPLETE";$("endt").textContent=e[0];$("endtext").innerHTML="<p>"+esc(e[1])+"</p>";
+ $("endstats").innerHTML=[["Day",S.day+"/"+MAXDAY],["Members",fmt(S.members)],["Health",S.health],["Chaos",S.chaos],["Mod rep",S.rep],["Score",fmt(score)]].map(function(x){return"<div><b>"+x[1]+"</b><span>"+x[0]+"</span></div>"}).join("");
+ var keys=Object.keys(CL),fc=keys.filter(function(k){return S.found[k]}).length;
+ var chips=keys.map(function(k){return S.found[k]?'<span class="chip">'+esc(CL[k][0])+"</span>":'<span class="chip no">???</span>'}).join("");
+ var bd=badges(),nd=Object.keys(found).length;
+ $("endextra").innerHTML='<div class="endrule"></div><b>Case board: '+fc+"/"+CLN+" clues</b><div class=\"chips\">"+chips+"</div>"+
+  (S.found.truth?"":'<p style="font-size:13px;color:var(--muted)">The truth is still out there. There’s a petrol station, a person, and a reason. Run it back and find it.</p>')+
+  (bd.length?'<div class="chips">'+bd.map(function(x){return'<span class="chip">'+esc(x)+"</span>"}).join("")+"</div>":"")+
+  '<p style="font-size:12px;color:var(--muted)">Endings found: '+nd+"/"+Object.keys(END).length+" · Best score: "+fmt(best)+"</p>";
+ $("end").classList.remove("hide");$("endday").disabled=true;$("endday2").disabled=true;
+}
+
+/* ===================== CASE BOARD / BELL ===================== */
+function caseBoard(){
+ var h=Object.keys(CL).map(function(k){var f=S.found[k];return'<div class="clue'+(f?"":" no")+'"><b>'+(f?esc(CL[k][0]):"???")+"</b><span>"+(f?esc(CL[k][1]):"Not yet found. Someone will post it. Hopefully you’ll let them.")+"</span></div>"}).join("");
+ openModal({tag:"CASE BOARD",title:Object.keys(S.found).length+" of "+CLN+" clues",html:"<p>"+stageOf(S.mystery)+" · "+S.mystery+"%</p>"+h,btn:"Back to the queue"});
+}
+function bellModal(){
+ var h=S.notes.length?S.notes.slice(-8).reverse().map(function(n){return'<div class="clue"><span style="color:var(--text)">'+esc(n)+"</span></div>"}).join(""):"<p>Nothing yet. It’s quiet. Suspiciously quiet.</p>";
+ S.unread=0;setHUD();openModal({tag:"NOTIFICATIONS",title:"Inbox",html:h,btn:"Close"});
+}
+
+/* ===================== RUN CONTROL ===================== */
+function newRun(){
+ S=fresh();uid=0;document.body.classList.remove("era-v","surge");document.body.classList.add("era-q");$("trend").classList.add("hide");
+ $("end").classList.add("hide");$("modal").classList.add("hide");$("endday").disabled=false;$("endday2").disabled=false;$("log").innerHTML="";$("feed").textContent="";
+ logLine("You created r/LastCustomer.");logLine("Someone posted a blurry banana.");
+ ["v-mem","a-mem"].forEach(function(i){$(i)._n=null});S.rate=.25;
+ buildQueue();renderQueue();setHUD();
+}
+function meta(){try{var r=JSON.parse(localStorage.getItem("rr_v2")||"{}");var n=Object.keys(r.endings||{}).length;$("meta").textContent=n?"Endings found: "+n+"/"+Object.keys(END).length+" · Best score: "+fmt(r.best||0):"Tip: the quiet days won’t last."}catch(x){$("meta").textContent="Tip: the quiet days won’t last."}}
+
+/* ===================== EVENTS ===================== */
+$("feed").addEventListener("click",function(e){
+ var b=e.target.closest("button[data-a]"),card=e.target.closest(".post");
+ if(b&&card){act(card.id.slice(2),b.dataset.a);return}
+ if(card&&!card.dataset.out){var old=S.sel&&$("p-"+S.sel);if(old)old.classList.remove("sel");S.sel=card.id.slice(2);card.classList.add("sel")}
+});
+document.addEventListener("keydown",function(e){
+ if(!S||S.locked||S.ended||e.ctrlKey||e.metaKey||e.altKey)return;
+ if(!$("intro").classList.contains("hide"))return;
+ var k=e.key.toLowerCase();if("arlwb".indexOf(k)<0||k.length!==1)return;
+ var id=S.sel||(S.queue[0]&&S.queue.slice().sort(function(a,b){return a.age-b.age})[0].id);if(!id)return;
+ e.preventDefault();act(id,k);
+ var next=S.queue[0];if(next){S.sel=next.id;var el=$("p-"+next.id);if(el)el.classList.add("sel")}
+});
+document.querySelector(".sortbox").addEventListener("click",function(e){var b=e.target.closest("button[data-sort]");if(b){S.sort=b.dataset.sort;sortFeed()}});
+$("endday").onclick=endDay;$("endday2").onclick=endDay;$("board").onclick=function(){if(!S.locked)caseBoard()};$("bell").onclick=function(){if(!S.locked)bellModal()};
+$("hintx").onclick=function(){$("hint").classList.add("hide")};
+$("restart").onclick=function(){if(!S.locked&&confirm("Restart your run?"))newRun()};
+$("start").onclick=function(){$("intro").classList.add("hide")};
+$("again").onclick=newRun;
+S=fresh();meta();newRun();
+})();
+</script>
+</body>
+</html>
